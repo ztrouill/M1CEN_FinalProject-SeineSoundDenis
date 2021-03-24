@@ -16,9 +16,7 @@ export function createMarkers() {
        el.style.height = 40 + "px";
 
       if (features[i].properties.name === "Basilique Cathédrale de Saint-Denis") {
-            el.src = require("../../assets/basilique.svg");
-            el.type = "image.svg+xml";
-            el.data = require("../../assets/basilique.svg");
+            el.src = require("../../assets/basilique.png");
            el.id = "poi-svg-element";
            el.style.width = 100 + "px";
            el.style.height = 150 + "px";

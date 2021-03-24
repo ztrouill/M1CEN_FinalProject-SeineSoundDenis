@@ -29,6 +29,7 @@ export function createMap() {
     map.on("load", function () {
         let markers = createMarkers();
         let popup = createPopUp(markers);
+        
        // extrudeBuildings();
     });
 }
