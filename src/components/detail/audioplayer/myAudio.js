@@ -1,5 +1,5 @@
 import { letsDance } from "./waveform/drawWave.js"
-
+import { getCurrentTime } from "./waveform/myWaveform.js"
 /// Audio Element ///
 
 function createAudioElement(url) {
@@ -28,7 +28,7 @@ function createButton() {
     
     switchIconButton(0, button);
 
-    document.querySelector("#waveform-container").appendChild(button);
+    document.querySelector("#player-container").prepend(button);
     return button;
 }
 
@@ -62,21 +62,22 @@ export default function createAudio(url) {
     let infos = createInfo();
 
     audio.addEventListener("loadedmetadata", function() {
-        infos.duration.innerHTML = audio.duration;
-        infos.currentTime.innerHTML = audio.currentTime;
+        infos.duration.innerHTML = audio.duration.toFixed(2);
+        infos.currentTime.innerHTML = audio.currentTime.toFixed(2);
 
         console.log("duration = " + infos.duration);
     });
 
     button.addEventListener("click", function() {
+        let reqDance = null;
         if (audio.paused) {
-            switchCTA(1, button);
+            switchIconButton(1, button);
             audio.play();
             requestAnimationFrame(getCurrentTime);
-            //drawLine(data);
+            letsDance();
         }
         else {
-            switchCTA(0, button);
+            switchIconButton(0, button);
             audio.pause();
             infos.currentTime.innerHTML = audio.currentTime;
         }

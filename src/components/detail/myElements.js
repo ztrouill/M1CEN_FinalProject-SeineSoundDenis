@@ -1,6 +1,6 @@
 import { getCurrentTime } from "./myWave.js"
 
-
+switchCTA()
 
 export function createElements(url, data) {
 

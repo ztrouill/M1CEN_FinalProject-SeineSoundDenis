@@ -1,6 +1,15 @@
 import getAudioData from "./audioProcessing.js"
 import { drawLine } from "./drawWave.js";
 
+export function getCurrentTime(timestamp) {
+  let el = document.querySelector("#current-time");
+  let currentTime = document.querySelector("audio").currentTime;
+  
+  el.innerHTML = Math.round(currentTime);
+  
+  requestAnimationFrame(getCurrentTime);
+}
+
 function createCanvas(layer) {
     let canvas = document.createElement('canvas');
     canvas.id = `waveform-canvas-${layer}`;

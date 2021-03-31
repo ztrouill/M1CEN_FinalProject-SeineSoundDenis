@@ -33,27 +33,48 @@ export function drawLine(data, color, layer) {
         }
         drawLineSegment(ctx, color, x, height, width, (i + 1) % 2);
   }
-  if (layer === 'foreground')
-    createClip(canvas, ctx);
+  if (layer === 'foreground') {
+  //  ctx.clearRect(10, -canvas.height / 2, canvas.width, canvas.height);
+  }
+  //  
    // ctx.clip(path);
    // createRectangle("#4BADB1")
 }
 
-function createClip(canvas, ctx) {
-   // ctx.rect(50, 0, canvas.width, canvas.height);
-   // ctx.clip();
-    ctx.strokeStyle = "#4BADB1";
-   // ctx.stroke();
-   ctx.clearRect(100, -canvas.height / 2, canvas.width, canvas.height);
+let frame = 0;
+
+function hideForeground(timestamp, canvas, ctx, audio) {
+    let pxPerSec = canvas.width / audio.duration;
+    
+    //console.log("BEFORE // pxPerSec = " + pxPerSec);
+  //  pxPerSec /= audio.currentTime;
+    //console.log("AFTER // pxPerSec = " + pxPerSec);
+
+    let currentTime = audio.currentTime;
+  
+    //console.log("Current time == " + currentTime + "audio = " + audio.currentTime)
+ 
+    let x = pxPerSec * currentTime;
+
+
+    ctx.clearRect(0, -canvas.height / 2, x, canvas.height);
+
+    requestAnimationFrame((timestamp) => {
+        hideForeground(timestamp, canvas, ctx, audio);
+    });
 }
 
 export function letsDance() {
     let audio = document.querySelector("audio");
-    let canvas = document.querySelector("#waveform-canvas");
-    
+    let canvas = document.querySelector("#waveform-canvas-foreground");
+    let ctx = canvas.getContext("2d");
+
     let duration = audio.duration;
     let width = canvas.offsetWidth;
     
+    requestAnimationFrame((timestamp) => {
+        hideForeground(timestamp, canvas, ctx, audio);
+    });
     // Idée :
     // > Créer le clip path
     // > Créer le rectangle au fur et à mesure (x = voir cahier pour calcul)
