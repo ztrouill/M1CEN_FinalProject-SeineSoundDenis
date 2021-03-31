@@ -1,6 +1,5 @@
 import mapboxgl from "mapbox-gl";
 import { createMarkers } from "./MyMarkers.js"
-import { extrudeBuildings } from "../../extrudeBuilding.js"
 import { createPopUp } from "./MyPopUp.js";
 
 const mapbox = mapboxgl
@@ -14,8 +13,8 @@ const maxBounds = new mapboxgl.LngLatBounds(
 );
 
 const options = {
-    container: "mapContainer",
-    style : 'mapbox://styles/zoyeah/cklavutgp0ui917qrpn3hp51g/draft',
+    container: "app",
+    style : 'mapbox://styles/zoyeah/ckmrwho282hk718o5dhqp1bx2',
     center: [2.3580232, 48.935773],
     minZoom: 10,
     maxZoom: 22,
@@ -29,7 +28,5 @@ export function createMap() {
     map.on("load", function () {
         let markers = createMarkers();
         let popup = createPopUp(markers);
-        
-       // extrudeBuildings();
     });
 }

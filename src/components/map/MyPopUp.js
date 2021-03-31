@@ -1,5 +1,5 @@
 import { map }  from "./MyMap.js"
-import { launchSound } from "../sound/myWave.js"
+import createDetail from "../detail/myDetail.js"
 
 function turnAround() {     
     map.easeTo({
@@ -37,10 +37,10 @@ function createDOMElement(feature) {
 
     button.addEventListener("click", function(){
         flyToDestination(coordinates);
+        console.log("flyyyyy")
+        createDetail();
+
         map.on("zoomend", function() {
-            console.log("hello")
-            console.log("maps =  " + map + "options = " + map.getBearing())
-            
             turnAround(0);
         })
           
@@ -72,7 +72,6 @@ export function createPopUp(markers) {
            pop.on("open", function() {
                document.querySelector(".cta-listen").addEventListener("click", function() {
                    pop.addClassName("hide");
-                   launchSound();
                })
            })
         })
