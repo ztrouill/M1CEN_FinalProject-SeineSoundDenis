@@ -34,38 +34,65 @@ function createButton() {
 
 /// Audio Info ///
 
-function createInfo(){
-    let infos = {
-        currentTime : document.createElement("span"),
-        title : document.createElement("span"),
-        duration : document.createElement("span")
+function createTime(){
+    let time = {
+        currentTime: document.createElement("span"),
+        slash: document.createElement("span"),
+        duration: document.createElement("span")
     };
 
-    let container = document.querySelector("#info-audio-container");
-    
-    infos.currentTime.id = "current-time";
-    infos.duration.id = "duration";
+    time.currentTime.id = "current-time";
+    time.duration.id = "duration";
+    time.slash.id = "time-slash";
 
-    infos.title.innerHTML = "Jean Eudes nous présente la Basilique";
-
-       
-    container.appendChild(infos.currentTime); 
-    container.appendChild(infos.title);
-    container.appendChild(infos.duration);
-
-    return infos;
+    time.slash.innerHTML = "/";
+  
+    return time;
 }
 
-export default function createAudio(url) {
+function createTitle() {
+    let title = document.createElement("div");
+
+    title.id = "title-sound-track";
+    title.innerHTML = "Jean Eudes nous présente la Basilique";
+
+    document.querySelector("#player-container").prepend(title);
+
+    return title;
+}
+
+export function formatTime(time) {
+    let minutes = Math.floor(time / 60);
+    let seconds = Math.floor(time - minutes * 60);
+
+    if (minutes <= 9)
+        minutes = `0${parseInt(minutes)}`;
+
+    if (seconds < 10)
+        seconds = `0${parseInt(seconds)}`;
+
+    return `${minutes}:${seconds}`
+}
+
+export function createAudio(url) {
     let audio = createAudioElement(url);
     let button = createButton();
-    let infos = createInfo();
+    let time = createTime();
+    let title = createTitle();
+    let audioInfoContainer = document.querySelector("#info-audio-container");
+    let timeContainer = document.createElement("div");
+    
+    timeContainer.id = "time-container";
+
+    for (let i = 0; i < Object.values(time).length; i++)
+        timeContainer.appendChild(Object.values(time)[i]);
+
+    audioInfoContainer.appendChild(button);
+    audioInfoContainer.appendChild(timeContainer);
 
     audio.addEventListener("loadedmetadata", function() {
-        infos.duration.innerHTML = audio.duration.toFixed(2);
-        infos.currentTime.innerHTML = audio.currentTime.toFixed(2);
-
-        console.log("duration = " + infos.duration);
+        time.duration.innerHTML = formatTime(audio.duration.toFixed(2));
+        time.currentTime.innerHTML = formatTime(audio.currentTime.toFixed(2));
     });
 
     button.addEventListener("click", function() {
@@ -79,7 +106,7 @@ export default function createAudio(url) {
         else {
             switchIconButton(0, button);
             audio.pause();
-            infos.currentTime.innerHTML = audio.currentTime;
+            time.currentTime.innerHTML = audio.currentTime;
         }
     });
 }

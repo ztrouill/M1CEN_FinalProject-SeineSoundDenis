@@ -1,6 +1,6 @@
 function filterData(audioBuffer) { // Réduction du nombre de data 
     const rawData = audioBuffer.getChannelData(0); // Récupération uniquemenet du canal gauche
-    const samples = 70; //Ici voir combien on veut avoir de "barres" // Valeur peut etre à modifier
+    const samples = 80; //Ici voir combien on veut avoir de "barres" // Valeur peut etre à modifier
     const blockSize = Math.floor(rawData.length / samples); 
     let filteredData = [];
 

@@ -1,9 +1,16 @@
+$beige: #EAE2DD;
+
 * {
   margin: 0;
   border: 0;
   padding: 0;
   list-style: none;
   text-decoration: none;
+  font-family: 'Lato', sans-serif;
+}
+
+#app {
+  background: #263031;
 }
 
 .basemap {
@@ -23,26 +30,49 @@
   height: 100%;
 }
 
-.path-logo-elements {
-  transform: translate(50%, 50%);
-}
-
-#player-container{
+#content-container {
+  height: 100%;
+  width: 50%;
   position: fixed;
-  top: 50%;
+  top: 0;
   left: 50%;
-  z-index: 99;
+  #right-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    #player-container{
+      position: fixed;
+      display: grid;
+      grid-template-rows: 0fr;
+      top: 50%;
+      left: 50%;
+      z-index: 99;
+      color: $beige;
+      font-size: 24px;
+      #title-sound-track {
+        justify-self: center;
+      }
+      #waveform-container {
+        display: grid;
+        grid-template: 1fr/1fr;
+        .waveform-canvas {
+          grid-column-start: 1;
+          grid-row-start: 1;
+        }
+      }
+      #info-audio-container {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    
+    #silouhette-container {
+      display: none;
+    }
+  }
 }
 
 .cta-audio-action {
   font-size : 32px;
   color: #EAE2DD;
-}
-
-.waveform-canvas {
-  position: absolute;
-}
-
-#waveform-canvas-foreground {
-  z-index: 2;
 }

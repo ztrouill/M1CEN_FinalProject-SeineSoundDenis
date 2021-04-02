@@ -13,7 +13,7 @@ const maxBounds = new mapboxgl.LngLatBounds(
 );
 
 const options = {
-    container: "app",
+    container: "map",
     style : 'mapbox://styles/zoyeah/ckmrwho282hk718o5dhqp1bx2',
     center: [2.3580232, 48.935773],
     minZoom: 10,
