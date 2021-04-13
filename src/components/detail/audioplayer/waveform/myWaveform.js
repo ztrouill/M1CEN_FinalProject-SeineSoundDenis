@@ -1,5 +1,5 @@
 import getAudioData from "./audioProcessing.js"
-import { drawLine } from "./drawWave.js";
+import { drawLine, changeCurrentTime } from "./drawWave.js";
 import { formatTime } from "../myAudio.js"
 
 export function getCurrentTime(timestamp) {
@@ -23,17 +23,23 @@ function createCanvas(layer) {
     const ctx = canvas.getContext("2d");
   //  ctx.scale(dpr, dpr);
     ctx.translate(0, (canvas.offsetHeight / 2)); // Ici enlever le /2 => Rend uniquement les valeurs positives == herbes ? Element de déco ?
+
+    if (layer === "foreground")
+      canvas.addEventListener("click", (e) => {
+        if (!document.querySelector("audio").paused)
+          changeCurrentTime(e.pageX); 
+      });
 }
 
 export function createWaveform(url) {
     let audioData = null;
     let color = "#4BADB1";
     createCanvas("foreground"); // beige
-    createCanvas("background"); // color 
+    createCanvas("background"); // color
     getAudioData(url)
             .then(response => {
                 audioData = response;
-                drawLine(audioData, color, "background");
+             //   drawLine(audioData, color, "background");
                 drawLine(audioData, "#EAE2DD", "foreground");
             });
 }
