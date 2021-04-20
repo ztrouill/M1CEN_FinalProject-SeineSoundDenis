@@ -1,13 +1,13 @@
-import { map }  from "./MyMap.js"
+import { map } from "./MyMap.js"
 import createDetail from "../detail/myDetail.js"
 
-function turnAround() {     
+function turnAround() {
     map.easeTo({
         bearing: map.getBearing() - 10,
         duration: 3000,
-        easing: x => x 
-        });
-        
+        easing: x => x
+    });
+
     requestAnimationFrame(turnAround);
 }
 
@@ -18,65 +18,101 @@ function flyToDestination(coordinates) {
         pitch: 80,
     }
 
+    console.log("coordinqtes = " + options.pitch)
+
     map.flyTo(options);
 }
 
-function createDOMElement(feature) {
-    const description =  feature.properties.description;
-    const coordinates =  feature.geometry.coordinates;
+function createListenCTA(lgtLat, color) {
+    const container = document.createElement("div");
+    const listen = document.createElement("a");
+
+    listen.innerHTML = "Écouter";
+    listen.className = "cta-listen";
+    listen.style.background = color;
+    container.className = "cta-container";
+    console.log("lgt = " + lgtLat)
+
+    container.appendChild(listen);
+
+    return container;
+}
+
+function createContent(feature, color) {
+    const container = document.createElement("div");
+    const title = document.createElement("div");
+    const paragraphe = document.createElement("p");
+    const listen = createListenCTA(feature.geometry.coordinates, color);
+
+    container.className = "content";
+    title.className = "title";
+    title.innerHTML = feature.properties.name;
+    title.style.color = color;
+    paragraphe.innerHTML = feature.properties.description;
+
+    container.appendChild(title);
+    container.appendChild(paragraphe);
+    container.appendChild(listen);
+
+    return container;
+}
+
+function createImg() {
+    //const container = document.createElement("div");
+    const img = document.createElement("img");
+
+    // container.className = "img-pop-up";
+    // container.appendChild(img);
+    img.src = require("../../assets/places/main_d_oeuvres/img/0.jpg");
+
+    return img;
+
+}
+
+export function createPopUp(feature, color) {
+    const popUp = document.createElement("div");
+    const close = document.createElement("i");
+    console.log(feature.properties.content)
+    const content = createContent(feature, color);
+    const lgtLat = feature.geometry.coordinates;
+
+    console.log("properties = " + JSON.stringify(feature.properties));
+    popUp.id = "pop-up";
+    if (feature.properties.content) {
+        const img = createImg();
+        popUp.style.width = "50%";
+        popUp.appendChild(img);
+    }
+    else 
+        popUp.style.width = "33%";
+    close.className = "close fas fa-times-circle";
+
+    popUp.appendChild(close);
+    popUp.appendChild(content);
 
 
-    const paragraphe = window.document.createElement("p");
-    const button = window.document.createElement("a");
+    const popUpContainer = document.createElement("div");
 
-    paragraphe.innerHTML = description;
-    button.innerHTML = "Visiter";
-    button.className = "cta-listen"
+    popUpContainer.id = "pop-up-container";
+    popUpContainer.prepend(popUp);
 
-    paragraphe.appendChild(button);
+    document.querySelector("#app").prepend(popUpContainer);
+    let listen = document.querySelector(".cta-listen");
 
-    button.addEventListener("click", function(){
-        flyToDestination(coordinates);
-        console.log("flyyyyy")
+    listen.addEventListener("click", function () {
+        flyToDestination(lgtLat);
         createDetail();
-
-        map.on("zoomend", function() {
-            turnAround(0);
-        })
-          
+        map.on("zoomend", function () {
+            console.log("hello"); turnAround(0)
+        });
     });
 
-    return paragraphe
-}
+    popUpContainer.addEventListener("click", function (e) {
+        console.log("e.target = " + e.target.id);
+        if (e.target.id == "pop-up-container" || e.target.classList.contains("close"))
+            popUpContainer.remove(popUp);
+    })
 
-export function createPopuUp(feature) {
 
-    let popup = new mapboxgl.Popup().setDOMContent(createDOMElement(feature, popup))
-                                .setLngLat(feature.geometry.coordinates);
-
-    let ctaListen = document.querySelector("cta-listen")
-    return popup;
-}
-
-export function createPopUp(markers) {
-    const features = map.queryRenderedFeatures( {layers: ['poi-lieux-de-cultes']});
-    let popup = [];
-
-    for (let i = 0; i < features.length; i++) {
-        let pop = new mapboxgl.Popup({closeOnClick : true}).setDOMContent(createDOMElement(features[i]))
-        .setLngLat(features[i].geometry.coordinates);
-        console.log("markers = " + markers[i])
-        markers[i].getElement().addEventListener("click", function() {
-            console.log("Hello")
-            markers[i].setPopup(pop);
-           pop.on("open", function() {
-               document.querySelector(".cta-listen").addEventListener("click", function() {
-                   pop.addClassName("hide");
-               })
-           })
-        })
-        popup.push(pop);
-    }
-
-    return popup;
+    //  let ctaListen = document.querySelector("cta-listen")
 }

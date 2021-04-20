@@ -14,9 +14,9 @@ const maxBounds = new mapboxgl.LngLatBounds(
 
 const options = {
     container: "map",
-    style : 'mapbox://styles/zoyeah/ckmrwho282hk718o5dhqp1bx2',
+    style : 'mapbox://styles/zoyeah/cklavutgp0ui917qrpn3hp51g/draft',
     center: [2.3580232, 48.935773],
-    minZoom: 10,
+    minZoom: 11,
     maxZoom: 22,
     maxBounds: maxBounds
 }
@@ -25,8 +25,36 @@ export const map = new mapboxgl.Map(options);
 
 
 export function createMap() {
+    const layers = [ // Penser à changer ici
+        {
+            "name": "apprentissages-loisirs",
+            "color": "#79D9B6"
+        },
+        {
+            "name": "arts-et-artisanat",
+            "color": "#9DA7D7"
+        },
+        {
+            "name": "lieux-de-culte",
+            "color": "#4BADB1"
+        },
+        {
+            "name": "transports-travail-commerces",
+            "color": "#F3B99A"
+        }
+    ];
+    console.log("wolrd")
+
     map.on("load", function () {
-        let markers = createMarkers();
-        let popup = createPopUp(markers);
+
+        for (let i = 0; i < layers.length; i++)
+            map.on("click", layers[i].name, (e) => {
+                console.log(e.features[0].layer.paint["text-color"]);
+                console.log(e.features[0]);
+                map.setLayoutProperty(layers[i].name, "visibility", "visible");
+                createPopUp(e.features[0], layers[i].color);
+            })
+        // let markers = createMarkers();
+        // let popup = createPopUp(markers);
     });
 }

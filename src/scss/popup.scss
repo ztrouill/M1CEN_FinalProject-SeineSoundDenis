@@ -1,0 +1,48 @@
+@import "../variables";
+
+#pop-up {
+    position: absolute;
+    z-index: 1;
+    background: $black;
+    width: 56%;
+    display: flex;
+    border-radius: 16px;
+    border: 1px solid $beige;
+    img {
+        width: 150%;
+        object-fit: cover;
+        object-position: 64%;
+        border-radius: 16px 0 0 16px;
+        border-right: 1px solid $beige;
+    }
+    .content {
+        max-width: 100%;
+        padding: 56px;
+        padding-top: 64px;
+        .title {
+            font-size: 1.5em;
+        }
+        p {
+            color: $beige;
+            padding: 16% 0px;
+        }
+        .cta-container {
+            text-align: center;
+            .cta-listen {
+                padding: .25em 1.5em;
+                font-weight: bold;
+                border-radius: .25em;
+                margin: 0 auto;
+            }
+        }
+       
+    }
+    .close {
+        color: $beige;
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 1.8em;
+        padding: 32px;
+    }
+}

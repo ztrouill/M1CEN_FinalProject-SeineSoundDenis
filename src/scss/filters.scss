@@ -1,0 +1,31 @@
+#filters-container {
+    display: flex;
+    position: absolute;
+    z-index: 99999;
+    bottom: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(0deg, black 0%, rgba(0, 0, 0, 0) 100%);
+    .filter-component {
+        display: flex;
+        font-size: 1.2em;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2% 4%;
+        .filter-checkbox {
+            padding-right: 20px;
+        }
+       input:checked {
+            background-color: black;
+            color: white;
+        }
+        div {
+            padding-left: 20px;
+            width: 100%;
+        }
+    }
+    .filter-component input[type=checkbox] {
+        background-color: black;
+    } 
+}

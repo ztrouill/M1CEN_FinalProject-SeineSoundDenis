@@ -4,7 +4,7 @@ function createSilouhette() {
     let  img = document.createElement("img");
     let  imgContainer = document.createElement("div");
 
-    img.src = require("../../assets/basilique.svg");
+    //img.src = require("../../assets/basilique.svg");
     img.width = 150;
     imgContainer.id = "silouhette-container";
 
