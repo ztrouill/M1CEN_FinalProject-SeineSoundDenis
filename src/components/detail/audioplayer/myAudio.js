@@ -2,6 +2,8 @@ import { letsDance } from "./waveform/drawWave.js"
 import { getCurrentTime } from "./waveform/myWaveform.js"
 /// Audio Element ///
 
+
+
 function createAudioElement(url) {
     let audio = document.createElement("audio");
 
@@ -17,14 +19,14 @@ function createAudioElement(url) {
 /// Play/Pause Button ///
 
 function switchIconButton(i, button) {
-    const icons = ["fa-play-circle", "fa-pause-circle"];
+    const icons = ["play", "pause"];
     const ctaClass = `cta-audio-action far ${icons[i]}`;
    
-    button.className = ctaClass;
+    button.src = require(`/src/assets/${icons[i]}.svg`);
 }
 
 function createButton() {
-    const button = document.createElement("i");
+    const button = document.createElement("img");
     
     switchIconButton(0, button);
 
@@ -50,11 +52,11 @@ function createTime(){
     return time;
 }
 
-function createTitle() {
+function createTitle(name) {
     let title = document.createElement("div");
 
     title.id = "title-sound-track";
-    title.innerHTML = "Jean Eudes nous présente la Basilique";
+    title.innerHTML = name;
 
     document.querySelector("#player-container").prepend(title);
 
@@ -74,16 +76,17 @@ export function formatTime(time) {
     return `${minutes}:${seconds}`
 }
 
-export function createAudio(url) {
+export function createAudio(url, color, title) {
     let audio = createAudioElement(url);
     let button = createButton();
     let time = createTime();
-    let title = createTitle();
+    createTitle(title);
     let audioInfoContainer = document.querySelector("#info-audio-container");
     let timeContainer = document.createElement("div");
-    
-    timeContainer.id = "time-container";
+    let reqAnim = null;
 
+    timeContainer.id = "time-container";
+    audio.setAttribute("track", 0)
     for (let i = 0; i < Object.values(time).length; i++)
         timeContainer.appendChild(Object.values(time)[i]);
 
@@ -96,17 +99,23 @@ export function createAudio(url) {
     });
 
     button.addEventListener("click", function() {
-        let reqDance = null;
+        let reqTime = null;
         if (audio.paused) {
-            switchIconButton(1, button);
             audio.play();
-            requestAnimationFrame(getCurrentTime);
-            letsDance();
+            reqTime = requestAnimationFrame(getCurrentTime);
+            reqAnim = letsDance(color, audio.getAttribute("track"));
         }
         else {
-            switchIconButton(0, button);
             audio.pause();
             time.currentTime.innerHTML = audio.currentTime;
         }
+    });
+
+    audio.addEventListener("play", () => {
+        switchIconButton(1, button);
+    });
+
+    audio.addEventListener("pause", () => {
+        switchIconButton(0, button);
     });
 }

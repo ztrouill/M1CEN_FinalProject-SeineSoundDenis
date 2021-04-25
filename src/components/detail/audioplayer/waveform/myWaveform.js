@@ -1,14 +1,18 @@
-import getAudioData from "./audioProcessing.js"
-import { drawLine, changeCurrentTime } from "./drawWave.js";
+import { getAudioData } from "./audioProcessing.js"
+import { drawLinee, changeCurrentTime } from "./drawWave.js";
 import { formatTime } from "../myAudio.js"
 
 export function getCurrentTime(timestamp) {
   let el = document.querySelector("#current-time");
-  let currentTime = document.querySelector("audio").currentTime;
+  const audio = document.querySelector("audio");
+  let currentTime = audio.currentTime;
   
   el.innerHTML = formatTime(currentTime);
   
-  requestAnimationFrame(getCurrentTime);
+  let req = requestAnimationFrame(getCurrentTime);
+
+  if (audio.paused)
+    cancelAnimationFrame(req);
 }
 
 function createCanvas(layer) {
@@ -21,8 +25,7 @@ function createCanvas(layer) {
     canvas.width = canvas.offsetWidth * dpr * 2;
     canvas.height = canvas.offsetHeight * dpr;
     const ctx = canvas.getContext("2d");
-  //  ctx.scale(dpr, dpr);
-    ctx.translate(0, (canvas.offsetHeight / 2)); // Ici enlever le /2 => Rend uniquement les valeurs positives == herbes ? Element de déco ?
+    ctx.translate(0, (canvas.height / 2)); // Ici enlever le /2 => Rend uniquement les valeurs positives == herbes ? Element de déco ?
 
     if (layer === "foreground")
       canvas.addEventListener("click", (e) => {
@@ -31,15 +34,13 @@ function createCanvas(layer) {
       });
 }
 
-export function createWaveform(url) {
-    let audioData = null;
-    let color = "#4BADB1";
+export function createWaveform(file, name) {
+   let audioData = JSON.parse(sessionStorage.getItem(name));
     createCanvas("foreground"); // beige
-    createCanvas("background"); // color
-    getAudioData(url)
+  //  drawLinee(audioData, "foreground", false);
+    getAudioData(file, name)
             .then(response => {
                 audioData = response;
-             //   drawLine(audioData, color, "background");
-                drawLine(audioData, "#EAE2DD", "foreground");
+                drawLinee(audioData, "foreground", false);
             });
 }

@@ -5,7 +5,7 @@ function createElements() {
     const container = document.createElement("div");
     container.id = "filters-container";
 
-    for (let i = 0; i < themes.length; i++) {
+    for (const key in themes) {
         const filterContainer = document.createElement("div");
         const checkBox = document.createElement("input");
         const textThemes = document.createElement("div");
@@ -17,12 +17,12 @@ function createElements() {
         filterContainer.className = "filter-component";
 
         checkBox.type = "checkbox";
-        checkBox.name = themes[i].layer;
+        checkBox.name = key;//.layer;
         checkBox.className = "filter-checkbox";
         checkBox.checked = true;
 
-        textThemes.innerHTML = themes[i].name;
-        textThemes.style.color = themes[i].color;
+        textThemes.innerHTML = themes[key].name;
+        textThemes.style.color = themes[key].color;
     }
 
     document.querySelector("#app").prepend(container);

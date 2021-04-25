@@ -1,5 +1,6 @@
 import { createWaveform } from "./waveform/myWaveform";
-import { createAudio }from "./myAudio.js"
+import { createAudio } from "./myAudio.js"
+import { getAllAudioData } from "./waveform/audioProcessing.js"
 
 function  createContainers() {
     let   playerContainer = document.createElement("div");
@@ -18,10 +19,19 @@ function  createContainers() {
 }
 
 
-export default function createAudioPlayer() {
-    const url = require("../../../assets/sons/parc_courneuve/ambiance.wav");
-  
+export function createAudioPlayer(content, color) {
+
+    const audio = require(`/src/assets/content/${content[Object.keys(content)[0]]}`);
+    const audioData = [];
+
+    console.log(audio);
+
+
     createContainers();
-    createWaveform(url);
-    createAudio(url);
+    createAudio(audio, color, Object.keys(content)[0]);
+    //getAllAudioData(content)
+      //.then(() => {
+    createWaveform(audio, Object.keys(content)[0]);
+      //});
+
 }

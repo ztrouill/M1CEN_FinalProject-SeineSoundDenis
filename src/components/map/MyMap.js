@@ -1,6 +1,6 @@
 import mapboxgl from "mapbox-gl";
-import { createMarkers } from "./MyMarkers.js"
 import { createPopUp } from "./MyPopUp.js";
+import { themes } from "../themes.js";
 
 const mapbox = mapboxgl
 const accesssToken = 'pk.eyJ1Ijoiem95ZWFoIiwiYSI6ImNrbGF2Z2NpdzAweW0ycG1qbGhqNDdueDcifQ.ShZVfutCPoCi0KpnNd8MfQ';
@@ -25,36 +25,13 @@ export const map = new mapboxgl.Map(options);
 
 
 export function createMap() {
-    const layers = [ // Penser à changer ici
-        {
-            "name": "apprentissages-loisirs",
-            "color": "#79D9B6"
-        },
-        {
-            "name": "arts-et-artisanat",
-            "color": "#9DA7D7"
-        },
-        {
-            "name": "lieux-de-culte",
-            "color": "#4BADB1"
-        },
-        {
-            "name": "transports-travail-commerces",
-            "color": "#F3B99A"
-        }
-    ];
-    console.log("wolrd")
-
     map.on("load", function () {
 
-        for (let i = 0; i < layers.length; i++)
-            map.on("click", layers[i].name, (e) => {
-                console.log(e.features[0].layer.paint["text-color"]);
-                console.log(e.features[0]);
-                map.setLayoutProperty(layers[i].name, "visibility", "visible");
-                createPopUp(e.features[0], layers[i].color);
+        for (const key in themes) {
+            map.on("click", key, (e) => {
+                map.setLayoutProperty(key, "visibility", "visible");
+                createPopUp(e.features[0], themes[key].color, key);
             })
-        // let markers = createMarkers();
-        // let popup = createPopUp(markers);
+        }
     });
 }

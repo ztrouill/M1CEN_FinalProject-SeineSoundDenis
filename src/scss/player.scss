@@ -1,0 +1,34 @@
+#player-container{
+  display: grid;
+    grid-template-rows: 10% 50% 10%;
+    top: 50%;
+    left: 50%;
+    z-index: 99;
+    color: $beige;
+    font-size: 24px;
+    #title-sound-track {
+      justify-self: center;
+      padding-top: 2vh;
+      font-size: 1.5vw;
+    }
+    #waveform-container {
+      height: 100%;
+      .waveform-canvas {
+        grid-column-start: 1;
+        grid-row-start: 1;
+   //     width: 100%;
+      }
+    }
+    #info-audio-container {
+      display: flex;
+      justify-content: space-between;
+      #time-container {
+        font-size: 1.5vw;
+      }
+    }
+  }
+
+.cta-audio-action {
+    font-size : 32px;
+    color: #EAE2DD;
+}  

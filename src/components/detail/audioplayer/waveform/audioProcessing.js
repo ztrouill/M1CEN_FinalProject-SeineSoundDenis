@@ -21,18 +21,21 @@ function normalize(data) {
     return data.map(n => n * multiplier);
 }
 
-export default function getAudioData(url) {
+export function getAudioData(file, name) {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     const audioContext = new AudioContext();
     let audioData = null;
     
     return new Promise((resolve, reject) => {
-        fetch(url)
+        if (sessionStorage.getItem(name))
+            resolve(JSON.parse(sessionStorage.getItem(name)));
+        fetch(file)
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
         .then(function(audioBuffer) {
             const filteredData = filterData(audioBuffer);
             audioData = normalize(filteredData)
+            sessionStorage.setItem(name, JSON.stringify(audioData));
             resolve(audioData);
         })
         .catch(error => {
@@ -40,3 +43,20 @@ export default function getAudioData(url) {
         });
     })
 }
+
+// export function getAllAudioData(content) {
+//     const arrContent = Object.keys(content);
+
+//     return new Promise((resolve) => {
+//         for (let i = 0; i < arrContent.length; i++) {
+//             const audio = require(`/src/assets/content/${content[arrContent[i]]}`);
+//             getAudioData(audio)
+//                 .then((response) => {
+//                     sessionStorage.setItem(arrContent[i], JSON.stringify(response));
+//                     if (i == arrContent.length - 1)
+//                         resolve();
+//                 });
+//         }
+//     })
+   
+// }

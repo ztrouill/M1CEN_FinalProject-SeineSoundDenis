@@ -1,6 +1,10 @@
 import { map } from "./MyMap.js"
 import createDetail from "../detail/myDetail.js"
 
+
+// Découper le popup en plusieurs petits composants 
+// 1. listenButton
+// etc
 function turnAround() {
     map.easeTo({
         bearing: map.getBearing() - 10,
@@ -18,8 +22,6 @@ function flyToDestination(coordinates) {
         pitch: 80,
     }
 
-    console.log("coordinqtes = " + options.pitch)
-
     map.flyTo(options);
 }
 
@@ -31,7 +33,6 @@ function createListenCTA(lgtLat, color) {
     listen.className = "cta-listen";
     listen.style.background = color;
     container.className = "cta-container";
-    console.log("lgt = " + lgtLat)
 
     container.appendChild(listen);
 
@@ -57,29 +58,29 @@ function createContent(feature, color) {
     return container;
 }
 
-function createImg() {
+function createImg(url) {
     //const container = document.createElement("div");
     const img = document.createElement("img");
 
     // container.className = "img-pop-up";
     // container.appendChild(img);
-    img.src = require("../../assets/places/main_d_oeuvres/img/0.jpg");
+    img.src = require(`/src/assets/content/${url}/img/illu.jpg`);
 
     return img;
 
 }
 
-export function createPopUp(feature, color) {
+export function createPopUp(feature, color, layer) {
     const popUp = document.createElement("div");
     const close = document.createElement("i");
     console.log(feature.properties.content)
     const content = createContent(feature, color);
     const lgtLat = feature.geometry.coordinates;
 
-    console.log("properties = " + JSON.stringify(feature.properties));
     popUp.id = "pop-up";
+    popUp.name = layer;
     if (feature.properties.content) {
-        const img = createImg();
+        const img = createImg(feature.properties.content);
         popUp.style.width = "50%";
         popUp.appendChild(img);
     }
@@ -100,15 +101,17 @@ export function createPopUp(feature, color) {
     let listen = document.querySelector(".cta-listen");
 
     listen.addEventListener("click", function () {
+        popUpContainer.classList.add("fade-out");
+        document.querySelector("#filters-container").style.display = "none";
+        createDetail(feature.properties.content, feature.properties.name, layer);
         flyToDestination(lgtLat);
-        createDetail();
         map.on("zoomend", function () {
-            console.log("hello"); turnAround(0)
+            popUpContainer.remove(popUp);
+            //turnAround(0);
         });
     });
 
     popUpContainer.addEventListener("click", function (e) {
-        console.log("e.target = " + e.target.id);
         if (e.target.id == "pop-up-container" || e.target.classList.contains("close"))
             popUpContainer.remove(popUp);
     })

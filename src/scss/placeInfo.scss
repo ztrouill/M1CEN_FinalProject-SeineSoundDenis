@@ -1,0 +1,44 @@
+#place-container {
+    #place-name {
+        font-size: 2.5vw;
+        padding-bottom: 1vh;
+    }
+    #place-theme {
+        color: $beige;
+        font-size: 1.5vw;
+        font-weight: 300;
+    }
+}
+
+#year-container { 
+    display: flex;
+    align-items: center;
+    #year-text {
+        color: $beige;
+        font-size: 3vw;
+    }
+    #poi-year {
+        padding-right: 1.2em;
+    }
+}
+
+#track-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .name-track {
+        color: $beige;
+        font-size: 1.8vw;
+    }
+    #active-track {
+        font-weight: bold;
+    }
+    .inactive-track {
+        font-weight: 300;
+        &:hover {
+            opacity: 0.8;
+            cursor: pointer;
+            font-weight: 400;
+        }
+    }
+}

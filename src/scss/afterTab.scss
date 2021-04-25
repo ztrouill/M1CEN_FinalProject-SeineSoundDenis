@@ -1,0 +1,93 @@
+.tab-close {
+    grid-row-start: 5;
+}
+
+.tab-open {
+    transition: grid-row-start 1s ease;
+    grid-row-start: 2;
+}
+
+#after-container {
+    display: grid;
+    color: $beige;
+    grid-template-columns: 46% 46%;
+    grid-column-gap: 8%;
+    .after-tab {
+        border: 1px solid $beige;
+        padding: 4vh 2vw;
+        border-radius: .5vw;
+        border-bottom: none;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        display: flex;
+        flex-direction: column;
+      //  transform: translateY(63vh);
+        .after-title-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .after-title {
+                font-size: 1.5vw;
+                display: inline;
+            }
+            .arrow-up {
+                width: 2vw;
+                cursor: pointer;
+            }
+            #text-logo-after {
+                img {
+                    width: 2.5vw;
+                    padding-left: 1vw;
+                }
+            }
+        }
+        .after-intro {
+            font-size: 1.2vw;
+            padding: 6vh 0;
+        }
+        .after-content {
+            font-size: 1vw;
+            font-weight: 300;
+        }
+        .after-social-media-container {
+            font-size: 1.8vw;
+            display: flex;
+            justify-content: space-evenly;
+            padding: 8vh 0 0 0;
+        }
+    }
+}
+
+.show-tab {
+//    transform: translateY(0) !important;
+//    transition: transform .75s ease-in; 
+    animation: showTab .75s ease-in;
+}
+
+.hide-tab {
+    transform: translateY(62.5vh) !important;
+    transition: transform .75s ease-out;
+}
+
+.rotate-arrow-up {
+    transform: rotate(0);
+    transition: transform .75s ease-out;
+}
+
+.rotate-arrow-down {
+    transform: rotate(180deg);
+    transition: transform .75s ease-in;
+}
+
+.replace-tab {
+    transform: translateY(62.5vh);
+}
+
+@keyframes showTab {
+    from {
+        transform: translateY(62.5vh);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
