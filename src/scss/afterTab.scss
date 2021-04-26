@@ -1,17 +1,9 @@
-.tab-close {
-    grid-row-start: 5;
-}
-
-.tab-open {
-    transition: grid-row-start 1s ease;
-    grid-row-start: 2;
-}
-
 #after-container {
     display: grid;
     color: $beige;
     grid-template-columns: 46% 46%;
     grid-column-gap: 8%;
+    grid-row-start: 5;
     .after-tab {
         border: 1px solid $beige;
         padding: 4vh 2vw;
@@ -21,7 +13,7 @@
         border-bottom-right-radius: 0;
         display: flex;
         flex-direction: column;
-      //  transform: translateY(63vh);
+        height: 100%;
         .after-title-container {
             display: flex;
             align-items: center;
@@ -59,35 +51,22 @@
 }
 
 .show-tab {
-//    transform: translateY(0) !important;
-//    transition: transform .75s ease-in; 
-    animation: showTab .75s ease-in;
+    transform: translateY(-63vh) !important;
+    transition: transform .5s ease-in; 
+    //animation: showTab .5s ease-in;
 }
 
-.hide-tab {
-    transform: translateY(62.5vh) !important;
-    transition: transform .75s ease-out;
+.closed-tab {
+    transform: translateY(0) !important;
+    transition: transform .5s ease-out;
 }
 
 .rotate-arrow-up {
     transform: rotate(0);
-    transition: transform .75s ease-out;
+    transition: transform .5s ease-out;
 }
 
 .rotate-arrow-down {
     transform: rotate(180deg);
-    transition: transform .75s ease-in;
-}
-
-.replace-tab {
-    transform: translateY(62.5vh);
-}
-
-@keyframes showTab {
-    from {
-        transform: translateY(62.5vh);
-    }
-    to {
-        transform: translateY(0);
-    }
+    transition: transform .5s ease-in;
 }

@@ -25,13 +25,15 @@ export const map = new mapboxgl.Map(options);
 
 
 export function createMap() {
-    map.on("load", function () {
-
-        for (const key in themes) {
-            map.on("click", key, (e) => {
-                map.setLayoutProperty(key, "visibility", "visible");
-                createPopUp(e.features[0], themes[key].color, key);
-            })
-        }
-    });
+    return new Promise((resolve) => {
+        map.on("load", function () {
+            for (const key in themes) {
+                map.on("click", key, (e) => {
+                    map.setLayoutProperty(key, "visibility", "visible");
+                    createPopUp(e.features[0], themes[key].color, key);
+                })
+            }
+            resolve();
+        });
+    })  
 }

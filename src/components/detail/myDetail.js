@@ -1,9 +1,10 @@
-import { createAudioPlayer } from "./audioplayer/myAudioPlayer.js"
+import { createAudioPlayer } from "./audio/player/myAudioPlayer.js"
 import createSlider from "./slider/mySlider.js"
-import { createTrackList } from "./audioplayer/myAudioTrackList.js"
+import { createTrackList } from "./audio/myAudioTrackList.js"
 import { files } from "/src/index.js"
 import { themes } from '../themes.js'
-import createAfter from "./myAfter.js"
+import createFutureTabs from "./futurTab/myFuturTab.js"
+import createBackArrow from "./myBackArrow.js"
 
 function createTitle(name, color, layer) {
     let placeName = document.createElement("div");
@@ -31,7 +32,7 @@ function createContainer() {
     rightContainer.id = "right-container";
     leftContainer.id = "left-container";
     rightContainer.className = "both-container";
-    leftContainer.className = "both-container left-before";
+    leftContainer.className = "both-container";
 
     contentContainer.id = "content-container";
 
@@ -47,6 +48,7 @@ function createYear(layer) {
     let year = document.createElement("div");
 
     container.id = "year-container";
+    container.className = "fade-in";
     imgContainer.id = "poi-year";
     year.id = "year-text";
 
@@ -64,13 +66,12 @@ export default function createDetail(path, name, layer) {
     const color = themes[layer].color;
     const theme = themes[layer].name;
 
-    console.log(color);
-    console.log(place)
     createContainer();
-    createAudioPlayer(place["son"], color); // Ici createNamePiste
+    createAudioPlayer(place["son"], color);
     createTitle(name, color, theme);
     createYear(layer);
     createTrackList(place["son"], color);
     createSlider(place["img"], path);
-    createAfter(color);
+    createFutureTabs(color);
+    createBackArrow(color);
 }

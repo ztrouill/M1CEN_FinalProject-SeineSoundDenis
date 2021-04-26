@@ -64,16 +64,17 @@ function createEvent(files) {
 
     left.addEventListener("click", () => {
         i--;
-        if (i == 0) {
+        if (i == 0)
             left.style.visibility = "hidden";
-        }
+        if (i < Object.keys(files).length - 1)
+            right.style.visibility = "visible";
         loadImg(files, i);
     });
 
     right.addEventListener("click", () => {
         i++;
         if (i >= Object.keys(files).length - 1)
-            i = 0;
+            right.style.visibility = "hidden";
         if (i > 0)
             left.style.visibility = "visible";
         loadImg(files, i);

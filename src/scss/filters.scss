@@ -16,16 +16,51 @@
         .filter-checkbox {
             padding-right: 20px;
         }
-       input:checked {
-            background-color: black;
-            color: white;
+       
+        input {
+            width: 20px;
+            height: 20px;
+            appearance: none;
+            border: 2px solid $beige;
+            border-radius: 2px;
+            outline: none;
+            transition-duration: 0.3s;
+            background-color: $beige;
+            cursor: pointer;
+            display: flex;
+            &:checked::before { 
+                font-family: "Font Awesome 5 Free";
+                content: '\f00c';
+                color: $black;
+                font-weight: 900;
+                text-align: center;
+                position: absolute;
+                left: 15%;
+                top: -4%;
+                font-size: 16px;
+            }
+            &:checked {
+                background: $beige;
+                border: 2px solid $beige;
+                position: relative;
+            }
         }
         div {
             padding-left: 20px;
             width: 100%;
         }
     }
-    .filter-component input[type=checkbox] {
-        background-color: black;
-    } 
+}
+
+.filter-in {
+    transform: translateY(0) !important;
+    transition: transform .75s ease-in;
+}
+.filter-out {
+    transform: translateY(8vh) !important;
+    transition: transform .75s ease-in;
+}
+
+.filter-init-pos {
+    transform: translateY(8vh);       
 }

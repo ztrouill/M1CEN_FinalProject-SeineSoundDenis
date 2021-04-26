@@ -1,31 +1,9 @@
 import { map } from "./MyMap.js"
 import createDetail from "../detail/myDetail.js"
+import { flyToDestination } from "./cameraMvt.js"
+import { toggleUtils } from "../utils/myUtils.js";
 
-
-// Découper le popup en plusieurs petits composants 
-// 1. listenButton
-// etc
-function turnAround() {
-    map.easeTo({
-        bearing: map.getBearing() - 10,
-        duration: 3000,
-        easing: x => x
-    });
-
-    requestAnimationFrame(turnAround);
-}
-
-function flyToDestination(coordinates) {
-    const options = {
-        center: coordinates,
-        zoom: 20,
-        pitch: 80,
-    }
-
-    map.flyTo(options);
-}
-
-function createListenCTA(lgtLat, color) {
+function createListenCTA(color) {
     const container = document.createElement("div");
     const listen = document.createElement("a");
 
@@ -43,7 +21,7 @@ function createContent(feature, color) {
     const container = document.createElement("div");
     const title = document.createElement("div");
     const paragraphe = document.createElement("p");
-    const listen = createListenCTA(feature.geometry.coordinates, color);
+    const listen = createListenCTA(color);
 
     container.className = "content";
     title.className = "title";
@@ -58,13 +36,10 @@ function createContent(feature, color) {
     return container;
 }
 
-function createImg(url) {
-    //const container = document.createElement("div");
+function createImg(path) {
     const img = document.createElement("img");
 
-    // container.className = "img-pop-up";
-    // container.appendChild(img);
-    img.src = require(`/src/assets/content/${url}/img/illu.jpg`);
+    img.src = require(`/src/assets/content/${path}/img/illu.jpg`);
 
     return img;
 
@@ -101,12 +76,14 @@ export function createPopUp(feature, color, layer) {
     let listen = document.querySelector(".cta-listen");
 
     listen.addEventListener("click", function () {
+        if (!feature.properties.content)
+            return;
         popUpContainer.classList.add("fade-out");
-        document.querySelector("#filters-container").style.display = "none";
-        createDetail(feature.properties.content, feature.properties.name, layer);
+        toggleUtils();
         flyToDestination(lgtLat);
-        map.on("zoomend", function () {
+        map.once("zoomend", () => {
             popUpContainer.remove(popUp);
+            createDetail(feature.properties.content, feature.properties.name, layer);
             //turnAround(0);
         });
     });
