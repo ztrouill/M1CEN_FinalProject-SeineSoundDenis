@@ -1,6 +1,24 @@
+const portrait = window.innerWidth <= window.innerHeight ? true : false;
+
+function preloadImg(files) {
+    for (const img in files) {
+        const preloadLink = document.createElement("link");
+        const srcImg = new Image();
+
+        preloadLink.href = require(`/src/assets/content/${files[img]}`);
+        preloadLink.rel = "preload";
+        preloadLink.as = "image";
+
+        srcImg.src = require(`/src/assets/content/${files[img]}`);
+        document.head.appendChild(preloadLink);
+    }
+}
+
 function checkOrientationImg(img) {
     let imgContainer = document.querySelector("#slider-img-container");
 
+    if (portrait)
+        return;
     img.addEventListener("load", () => {
         if (img.offsetHeight > img.offsetWidth)
             imgContainer.style.height = 50 + "%";
@@ -17,8 +35,10 @@ function loadImg(files, i) {
     const img = document.querySelector("#img-slider");
     const src = require(`/src/assets/content/${files[arrFiles[i]]}`);
     
+    preloadImg(files);
+
     img.src = src;
-    img.className = "hidden";
+  //  img.className = "hidden";
 
     checkOrientationImg(img);
 }
@@ -86,8 +106,10 @@ export default function createSlider(files) {
     const len = Object.keys(files).length;
 
     slider.id = "slider-container";
+    slider.classList = "fade-in showed-element";
     document.querySelector("#right-container").prepend(slider);
 
+    preloadImg();
     createContainers();
     createArrows();
     loadImg(files, 0);

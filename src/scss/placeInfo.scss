@@ -42,3 +42,54 @@
         }
     }
 }
+
+@media only screen and (max-width : 1108px) {
+    #place-container {
+        #place-theme {
+            font-size: 1.7vw;
+        }
+    }
+}
+
+@media only screen and (max-width : 800px) and (orientation: landscape){
+    #place-container #place-theme {
+        font-size: 2vw;
+      }
+}
+
+@media only screen and (orientation: portrait) {
+    #year-container {
+        display: none;
+    }
+    #track-list-container {
+        align-items: center;
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translatex(-50%);
+        width: 100%;
+        z-index: 9999;
+        .name-track-container {
+            padding: 2vh 0;
+            .name-track {
+                font-size: 2.8vh;
+            }
+        }
+    }
+    #title-place-container-mobile {
+        display: flex;
+        padding: 0 12vw;
+        justify-content: space-around;
+        #place-container {
+            text-align: center;
+            #place-theme {
+                font-size: 2.8vh;
+            }
+            #place-name {
+                font-size: 3.6vh;
+            }
+        }
+      }
+      
+    
+}

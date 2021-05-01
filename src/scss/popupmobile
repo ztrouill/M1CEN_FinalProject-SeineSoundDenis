@@ -1,0 +1,146 @@
+
+/* Feuille de style intégrée #2 | http://localhost:5000/ */
+
+#close-filters {
+  /* font-size: 48px; */
+  font-size: 6vw;
+}
+
+/* Feuille de style intégrée #2 | http://localhost:5000/ */
+
+#close-filters {
+  /* font-size: 6vw; */
+  font-size: 8vw;
+}
+
+/* Feuille de style intégrée #2 | http://localhost:5000/ */
+
+#close-filters {
+  /* font-size: 6vw; */
+  font-size: 8vw;
+}
+
+/* Feuille de style intégrée #2 | http://localhost:5000/ */
+
+#close-filters {
+  /* font-size: 6vw; */
+  font-size: 8vw;
+}
+
+/* Feuille de style intégrée #2 | http://localhost:5000/ */
+
+@media only screen and (max-width: 750px) and (orientation: portrait) {
+  #close-filters {
+    /* font-size: 8vw; */
+    font-size: 10vw;
+  }
+}
+
+/* Feuille de style intégrée #2 | http://localhost:5000/ */
+
+@media only screen and (max-width: 750px) and (orientation: portrait) {
+  #close-filters {
+    /* font-size: 12vw; */
+    font-size: 6vh;
+  }
+}
+
+#pop-up-container {
+  flex-direction: column;
+}
+
+#pop-up img {
+  /* max-width: 50%; */
+  /* border-radius: 16px 0 0 16px; */
+  max-width: 100%;
+}
+
+#pop-up .content {
+  /* padding-top: 64px; */
+  padding-top: 74px;
+  height: 100%;
+}
+
+#pop-up .content .title {
+  /* font-size: 1.5em; */
+  font-size: 1.8em;
+}
+
+#pop-up .content p {
+  /* padding: 16% 0px; */
+  padding: 18% 0px 32%;
+}
+
+#pop-up .content .cta-container .cta-listen {
+  /* padding: .25em 1.5em; */
+  padding: 0.5em 2em;
+}
+
+#pop-up {
+  /* background: #22242C; */
+  /* border-radius: 16px; */
+  z-index: ;
+  background: rgba(34, 36, 44, .8);
+}
+
+#pop-up .close {
+  /* font-size: 1.8em; */
+  font-size: 2.4em;
+}
+
+/* Élément | http://localhost:5000/ */
+
+#pop-up {
+  /* width: 50%; */
+  width: 100%;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Élément | http://localhost:5000/ */
+
+.content > p:nth-child(2) {
+  font-size: 2.4vh;
+  line-height: 3.6vh;
+}
+
+/* Élément | http://localhost:5000/ */
+
+.mapboxgl-ctrl-group {
+  display: none;
+}
+
+/* Élément | http://localhost:5000/ */
+
+#show-filters {
+  display: none;
+}
+
+/* Élément | http://localhost:5000/ */
+
+.content {
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+/* mapbox-gl.css | https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css */
+
+@media screen {
+  .mapboxgl-ctrl-attrib-button {
+    z-index: -1;
+  }
+  .mapboxgl-ctrl-attrib.mapboxgl-compact {
+    z-index: -1;
+  }
+}
+
+.mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right, .mapboxgl-ctrl-top-left, .mapboxgl-ctrl-top-right {
+  /* z-index: 2; */
+  z-index: 0;
+}
+
+/* Élément | http://localhost:5000/ */
+
+.cta-listen {
+  font-size: 1.2em;
+}

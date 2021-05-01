@@ -2,7 +2,7 @@ import { map } from "./MyMap";
 
 export function goBack() {
     const options = {
-        center: [2.3580232, 48.935773],
+        center: [2.4671998611368906, 48.91107134952631],
         zoom: 11,
         pitch: 0
     }
@@ -10,13 +10,13 @@ export function goBack() {
     map.flyTo(options);
 }
 
-export function flyToDestination(coordinates) {
+export function flyToDestination(coordinates, zoom, pitch) {
     const options = {
         center: coordinates,
         zoom: 20,
-        pitch: 80,
+        pitch: 80
     }
-
+    console.log(coordinates);
     map.flyTo(options);
 }
 

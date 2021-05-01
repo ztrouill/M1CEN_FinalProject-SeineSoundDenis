@@ -6,10 +6,10 @@ function createCanvas(layer) {
     canvas.id = `waveform-canvas-${layer}`;
     canvas.className = `waveform-canvas`;
     document.querySelector("#waveform-container").prepend(canvas);
-    const dpr = window.devicePixelRatio || 1;
+  //  const dpr = window.devicePixelRatio || 1;
 
-    canvas.width = canvas.offsetWidth * dpr * 2;
-    canvas.height = canvas.offsetHeight * dpr;
+    canvas.width = canvas.offsetWidth * 2;
+    canvas.height = canvas.offsetHeight;
     const ctx = canvas.getContext("2d");
     ctx.translate(0, (canvas.height / 2)); // Ici enlever le /2 => Rend uniquement les valeurs positives == herbes ? Element de déco ?
 

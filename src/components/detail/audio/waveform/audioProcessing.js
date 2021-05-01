@@ -29,7 +29,7 @@ export function getAudioData(file, name) {
     return new Promise((resolve, reject) => {
         if (sessionStorage.getItem(name))
             resolve(JSON.parse(sessionStorage.getItem(name)));
-        fetch(file)
+        fetch(file) // Tester de remplacer fetch par require
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
         .then(function(audioBuffer) {

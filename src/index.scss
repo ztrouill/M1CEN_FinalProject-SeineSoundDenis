@@ -5,6 +5,7 @@
 @import "/scss/player";
 @import "/scss/placeInfo";
 @import "/scss/afterTab";
+@import "/scss/menu";
 
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 
@@ -52,7 +53,7 @@ body {
   #right-container {
     display: grid;
     grid-template-rows: 60% 40%;
-    grid-row-gap: 8vh;
+    grid-row-gap: 6vh;
     max-height: 100vh;
     width: 50vw;
   }
@@ -66,7 +67,15 @@ body {
     position: fixed;
     padding: 2vw;
     cursor: pointer;
+    width: 2.4vw;
+    img {
+      max-width: 100%;
+    }
   }
+}
+
+#poi-title {
+  display: none;
 }
 
 #logo {
@@ -91,4 +100,53 @@ div {
 .fade-out {
   opacity: 0;
   transition: opacity .25s ease-out;
+}
+
+
+@media only screen and (orientation: portrait) {
+
+  #logo {
+    width: 6vh;
+    img {
+      padding: 2vh;
+    }
+  }
+
+  #content-container {
+    height: 100vh;
+    max-width: 100vw;
+    flex-direction: column;
+    .both-container {
+      width: 100vw;
+      padding: 0;
+    }
+    #back-arrow {
+      width: 4vh;
+      padding: 3vh 2vh;
+    }
+    #right-container {
+      height: 70vh;
+      padding-bottom: 4vh;
+      grid-row-gap: 4vh;
+      grid-template-rows: 60% 40%;
+      max-height: 100vh;
+      width: 100vw;
+      padding: 0;
+      padding-bottom: 4vh;
+      position: relative;
+    }
+    #left-container {
+      height: 30vh;
+      width: 100vw;
+      grid-template-rows: 1fr .8fr;
+      padding-top: 8vh;
+      #after-container {
+        display: none;
+      }
+    }
+  }
+
+  #poi-title {
+    display: block;
+}
 }

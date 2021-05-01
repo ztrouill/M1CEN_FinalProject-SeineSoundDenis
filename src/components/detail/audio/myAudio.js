@@ -7,7 +7,7 @@ function createAudioElement(url) {
 
     audio.src = url;
     audio.id = "audio-container";
-    //audio.preload = "metadata";
+    audio.preload = "auto";
 
     document.querySelector("#utils").appendChild(audio);
 
@@ -44,9 +44,23 @@ export function createAudioEvent(color) {
     });
 }
 
-export function createAudio(file, title) {
+function preloadAudio(files) {
+    for (const sound in files) {
+        const preloadLink = document.createElement("link");
+        const audio = new Audio();
+
+        preloadLink.href = require(`/src/assets/content/${files[sound]}`);
+        preloadLink.rel = "preload";
+        preloadLink.as = "audio";
+
+        audio.src = require(`/src/assets/content/${files[sound]}`);
+        document.head.appendChild(preloadLink);
+    }
+}
+
+export function createAudio(files, file, title) {
+    preloadAudio(files);
     let audio = createAudioElement(file);
-  
     
     if (!audio.getAttribute("track"))
         audio.setAttribute("track", 0)

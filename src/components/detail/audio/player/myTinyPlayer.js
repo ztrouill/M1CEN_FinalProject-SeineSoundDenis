@@ -23,11 +23,13 @@ export function createTinyPlayer(color) {
     container.append(titleNode);
     container.append(timeNode);
 
-    // button.remove();
-    // title.remove();
-    // time.remove();
-
     container.className = "fade-out";
 
     document.querySelector("#utils").append(container);
+
+    if (document.querySelector(".menu-tracklist")) {
+        document.querySelector(".menu-tracklist").remove();
+        console.log("hole");
+        timeNode.classList.add("hide");
+    }
 }

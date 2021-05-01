@@ -1,4 +1,4 @@
-function createSocialMedia(tab, color) {
+export function createSocialMedia(tab, color) {
     const social = {
         linkedin: {
             url: "https://linkedin.fr",
@@ -32,7 +32,7 @@ function createSocialMedia(tab, color) {
     tab.append(container);
 }
 
-function createContent(tab) {
+export function createContent(tab) {
     const text = {
         intro: "Seine-Sound-Denis est un projet sur le temps long !",
         content:

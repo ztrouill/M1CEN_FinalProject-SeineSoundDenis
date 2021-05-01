@@ -22,12 +22,16 @@ export function createTime(){
 }
 
 export function createTitle(name) {
-    let title = document.createElement("div");
+    let titleContainer = document.createElement("div");
+    let title = document.createElement("span");
 
-    title.id = "title-sound-track";
+    titleContainer.id = "title-sound-track";
+    
     title.innerHTML = name;
 
-    document.querySelector("#player-container").prepend(title);
+    titleContainer.append(title);
+    document.querySelector("#player-container").prepend(titleContainer);
+    console.log("title");
 }
 
 export function formatTime(time) {

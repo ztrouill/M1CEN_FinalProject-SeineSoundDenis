@@ -5,6 +5,26 @@ import { files } from "/src/index.js"
 import { themes } from '../themes.js'
 import createFutureTabs from "./futurTab/myFuturTab.js"
 import createBackArrow from "./myBackArrow.js"
+import { createMobileFutureTabs } from "./futurTab/myMobileFuturTab.js"
+
+const portrait = window.innerWidth <= window.innerHeight ? true : false;
+
+function addPoiToTitle(layer) {
+    const container = document.createElement("div");
+    const titleContainer = document.querySelector("#place-container");
+    const poiContainer = document.createElement("div");
+    const poi = document.createElement("img");
+
+    poiContainer.id = "poi-title";
+    poi.src = require(`/src/assets/pois/${layer}.svg`);
+    container.id = "title-place-container-mobile";
+
+    poiContainer.append(poi);
+    container.append(poiContainer);
+    container.append(titleContainer);
+
+    document.querySelector("#left-container").prepend(container);
+}
 
 function createTitle(name, color, layer) {
     let placeName = document.createElement("div");
@@ -72,6 +92,11 @@ export default function createDetail(path, name, layer) {
     createYear(layer);
     createTrackList(place["son"], color);
     createSlider(place["img"], path);
+    createBackArrow(layer);
     createFutureTabs(color);
-    createBackArrow(color);
+
+    if (portrait) {
+        createMobileFutureTabs(color);
+        addPoiToTitle(layer);
+    }
 }

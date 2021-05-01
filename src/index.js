@@ -2,17 +2,14 @@ import "./index.scss"
 import { createMap } from './components/map/MyMap.js'
 import { importFiles } from "./importFiles.js"
 import { createUtils } from "./components/utils/myUtils"
+const filters = require("./components/utils/filters/myFilters.js");
 
 export const files = importFiles();
+const tabletMobile = window.innerWidth <= 1000 ? true : false;
 
 createUtils();
 
 createMap()
     .then(() => {
-        const filters = document.querySelector("#filters-container");
-        console.log("hola")
-        filters.classList.add("filter-in");
-        setTimeout(() => {
-            filters.classList.remove("filter-init-pos");
-        }, 1500);
+        filters.showFiltersOnStart();
     })

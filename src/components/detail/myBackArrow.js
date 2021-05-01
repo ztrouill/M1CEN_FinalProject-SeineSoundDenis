@@ -1,11 +1,11 @@
 import { goBack } from "../map/cameraMvt.js";
-import { map } from "../map/MyMap";
+import { toggleMapControlers, map } from "../map/MyMap";
 import { toggleUtils } from "../utils/myUtils.js";
 import { createTinyPlayer } from "./audio/player/myTinyPlayer.js";
 import { createAudioEvent } from "./audio/myAudio.js";
 import { createListenEvent } from "./audio/player/myPlayPauseButton.js";
-
-function createEvents(color) {
+import { toggleFilterButton } from "../utils/filters/myResponsiveFilters.js";
+function createEvents(layer) {
     const arrow = document.querySelector("#back-arrow");
 
     arrow.addEventListener("click", () => {
@@ -13,15 +13,19 @@ function createEvents(color) {
         contentContainer.classList.add("fade-out");
 
         if (!document.querySelector("audio").paused)
-            createTinyPlayer(color);
+            createTinyPlayer();
         goBack();
         map.once("zoomend", () => {
             if (document.querySelector("#tiny-player")) {
-                createAudioEvent(color);
+                createAudioEvent();
                 createListenEvent();
             }
             toggleUtils();
             contentContainer.remove();
+            if (document.querySelector("#show-filters"))
+                toggleFilterButton(document.querySelector("#show-filters"));
+            toggleMapControlers();
+            map.setLayoutProperty(layer, "visibility", "visible");
         });
     });
 }
@@ -38,7 +42,7 @@ function createElements() {
     document.querySelector("#content-container").append(container);
 }
 
-export default function createBackArrow(color) {
+export default function createBackArrow(layer) {
     createElements();
-    createEvents();
+    createEvents(layer);
 }

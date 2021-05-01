@@ -1,6 +1,7 @@
 import { toggleTinyPlayer } from "../detail/audio/player/myTinyPlayer.js";
-import { createFilters, toggleFilter } from "./myFilters.js";
+import { createFilters, toggleFilter } from "./filters/myFilters.js";
 import { createLogo, toggleLogo } from "./myLogo.js";
+import { createMenu } from "./myMenu.js";
 
 export function createUtils() {
     const container = document.createElement("div");
@@ -10,6 +11,7 @@ export function createUtils() {
 
     createFilters();
     createLogo();
+    createMenu();
 }
 
 export function toggleUtils() {
