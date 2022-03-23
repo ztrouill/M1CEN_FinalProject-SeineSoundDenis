@@ -4,13 +4,34 @@ import { map } from "../../map/MyMap.js"
 const responsiveFilters = require("./myResponsiveFilters.js");
 const tabletMobile = window.innerWidth <= 1000 ? true : false;
 
-function createElements() {
+export function startAnimation() {
+    const filtersContainer = document.querySelectorAll(".filters-container");
+    const mobile = filtersContainer[0].children;
+    const desktop = filtersContainer[1].children;
+    const citiesLayer = "Other_Big_Cities";
+
+    for (let i = 0; i < mobile.length; i++) {
+        setTimeout(() => {
+            const checkboxM = mobile[i].children[0];
+            const checkboxD = desktop[i].children[0];
+            const nameLayer = Object.keys(themes)[i];
+
+            checkboxD.checked = true;
+            checkboxM.checked = true;
+            if (map.getLayoutProperty(citiesLayer, "visibility") === "visible")
+                map.setLayoutProperty(citiesLayer, "visibility", "none");
+            map.setLayoutProperty(nameLayer, "visibility", "visible");
+        }, 2500 * i)
+    }
+}
+
+function createElements(device) {
     const container = document.createElement("div");
     const background = document.createElement("div");
 
-    container.id = "filters-container";
-    background.id = "filters-background";
-    background.className = "filter-init-pos filter-out";
+    container.className = "filters-container";
+    background.id = `filters-${device}`;
+    background.className = `filter-init-pos filter-out filters-background`;
 
     for (const key in themes) {
         const filterContainer = document.createElement("div");
@@ -36,55 +57,73 @@ function createElements() {
 
     background.append(container);
     document.querySelector("#utils").append(background);
+
+    if (device === "mobile")
+        responsiveFilters.createResponsiveFilters();
+}
+
+function toggleLayer(i, checkbox) {
+    const nameLayer = Object.keys(themes)[i]
+    const visibility = checkbox.checked;
+    const citiesLayer = "Other_Big_Cities";
+
+    if (map.getLayoutProperty(citiesLayer, "visibility") === "visible")
+        map.setLayoutProperty(citiesLayer, "visibility", "none");
+    if (!visibility)
+        map.setLayoutProperty(nameLayer, "visibility", "none");
+    else
+        map.setLayoutProperty(nameLayer, "visibility", "visible");
 }
 
 function createEvents() {
-    const filters = document.querySelectorAll(".filter-checkbox");
+    const filtersContainer = document.querySelectorAll(".filters-container");
+    const mobile = filtersContainer[0].children;
+    const desktop = filtersContainer[1].children;
 
-    for (let i = 0; i < filters.length; i++) {
-        filters[i].addEventListener("click", () => {
-            const nameLayer = Object.keys(themes)[i]
-            const visibility = filters[i].checked;// map.getLayoutProperty(nameLayer, "visibility");
-            const citiesLayer = "Other_Big_Cities";
+    for (let i = 0; i < mobile.length; i++) {   
+        const checkboxM = mobile[i].children[0];
+        const checkboxD = desktop[i].children[0];
+       
+        checkboxM.addEventListener("click", () => {
+          toggleLayer(i, checkboxM);      
+        });
+        checkboxM.addEventListener("change", () => {
+            checkboxD.checked = checkboxM.checked;
+        });
 
-            if (map.getLayoutProperty(citiesLayer, "visibility") === "visible")
-                map.setLayoutProperty(citiesLayer, "visibility", "none");
-            if (!visibility)
-                map.setLayoutProperty(nameLayer, "visibility", "none");
-            else
-                map.setLayoutProperty(nameLayer, "visibility", "visible");
-        })
+        checkboxD.addEventListener("click", () => {
+            toggleLayer(i, checkboxD);      
+        });
+        checkboxD.addEventListener("change", () => {
+            checkboxM.checked = checkboxD.checked;
+        });
     }
 }
 
 export function showFiltersOnStart() {
-    if (!tabletMobile) {
-        const filters = document.querySelector("#filters-background");
-        filters.classList.add("filter-in");
-        setTimeout(() => {
-            filters.classList.remove("filter-init-pos");
-            filters.classList.remove("filter-out");
-        }, 1500);
-    }
+    const filters = document.querySelector("#filters-desktop");
 
-    else {
-        setTimeout(() => {
-            responsiveFilters.toggleFilterButton(document.querySelector("#show-filters"));
-        }, 1000)
-
-    }
+    filters.classList.add("filter-in");
+    filters.classList.remove("filter-init-pos");
+    filters.classList.remove("filter-out");
+    
+    responsiveFilters.toggleFilterButton(document.querySelector("#show-filters"));
 }
 
 export function toggleFilter() {
-    const filters = document.querySelector("#filters-background");
-
+    const filters = document.querySelector("#filters-desktop");
     filters.classList.toggle("filter-in");
-    filters.classList.toggle("filter-out");
+//    setTimeout(() => {
+        filters.classList.toggle("filter-init-pos");
+        filters.classList.toggle("filter-out");
+  //  }, 1500);
+    
+    responsiveFilters.toggleFilterButton(document.querySelector("#show-filters"));
 }
 
 export function createFilters() {
-    createElements();
+    createElements("mobile");
+    createElements("desktop");
+
     createEvents();
-    if (tabletMobile)
-        responsiveFilters.createResponsiveFilters();
 }

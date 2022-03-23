@@ -9,12 +9,12 @@ export function createLogo() {
     const logo = document.createElement("img");
     const container = document.createElement("a");
 
-    logo.src = require("/src/assets/logo.png");
+    logo.src = require("../../assets/logo.png");
     
     container.href = "#";
     container.append(logo);
     container.id = "logo";
-    container.classList.add("fade-in");
+    container.classList.add("fade-out");
 
     document.querySelector("#utils").append(container);
 

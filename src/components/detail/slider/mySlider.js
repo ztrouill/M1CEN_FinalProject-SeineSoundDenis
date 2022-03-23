@@ -5,11 +5,11 @@ function preloadImg(files) {
         const preloadLink = document.createElement("link");
         const srcImg = new Image();
 
-        preloadLink.href = require(`/src/assets/content/${files[img]}`);
+        preloadLink.href = require(`../../../assets/content/${files[img]}`);
         preloadLink.rel = "preload";
         preloadLink.as = "image";
 
-        srcImg.src = require(`/src/assets/content/${files[img]}`);
+        srcImg.src = require(`../../../assets/content/${files[img]}`);
         document.head.appendChild(preloadLink);
     }
 }
@@ -33,7 +33,7 @@ function checkOrientationImg(img) {
 function loadImg(files, i) {
     const arrFiles = Object.keys(files);
     const img = document.querySelector("#img-slider");
-    const src = require(`/src/assets/content/${files[arrFiles[i]]}`);
+    const src = require(`../../../assets/content/${files[arrFiles[i]]}`);
     
     preloadImg(files);
 
@@ -63,8 +63,8 @@ function createArrows() {
     arrows.left.className = "arrow-slider";
     arrows.right.className = "arrow-slider";
     
-    arrows.left.src = require("/src/assets/left.svg");
-    arrows.right.src = require("/src/assets/right.svg");
+    arrows.left.src = require("../../../assets/left.svg");
+    arrows.right.src = require("../../../assets/right.svg");
 
     arrows.left.id = "arrow-left";
     arrows.right.id = "arrow-right";

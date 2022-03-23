@@ -69,7 +69,7 @@ function createElements(color) {
             const logoJO = document.createElement("img");
             const textLogoContainer = document.createElement("div");
 
-            logoJO.src = require("/src/assets/logo_jo.svg");
+            logoJO.src = require("../../../assets/logo_jo.svg");
             title.innerHTML = "2024";
             textLogoContainer.id = "text-logo-after";
 
@@ -85,7 +85,7 @@ function createElements(color) {
         title.className = "after-title";
         tab.className = "after-tab";
         titleContainer.className = "after-title-container";
-        arrowUp.src = require("/src/assets/up.svg");
+        arrowUp.src = require("../../../assets/up.svg");
         arrowUp.className = "arrow-up";
 
         titleContainer.append(arrowUp);
@@ -101,7 +101,7 @@ function createElements(color) {
 }
 
 function toggleUpContent() {
-    const trackList = document.querySelector("#track-list-container");
+    const trackList = document.querySelector("#track-list-container-desktop");
     const year = document.querySelector("#year-container");
 
     trackList.classList.toggle("fade-in");

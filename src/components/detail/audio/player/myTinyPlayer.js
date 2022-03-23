@@ -5,7 +5,7 @@ export function toggleTinyPlayer() {
     player.classList.toggle("fade-out");
 }
 
-export function createTinyPlayer(color) {
+export function createTinyPlayer() {
     const title = document.querySelector("#title-sound-track");
     const time = document.querySelector("#time-container");
     const button = document.querySelector("#listen-button");
@@ -27,9 +27,9 @@ export function createTinyPlayer(color) {
 
     document.querySelector("#utils").append(container);
 
+    timeNode.classList.remove("hide");
+
     if (document.querySelector(".menu-tracklist")) {
         document.querySelector(".menu-tracklist").remove();
-        console.log("hole");
-        timeNode.classList.add("hide");
     }
 }

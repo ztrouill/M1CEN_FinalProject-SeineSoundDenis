@@ -91,16 +91,17 @@ function createPage(i) {
         setTimeout(() => {
             background.remove();
         }, 600)
-        if (portrait) {
-            const nav = document.querySelector("#menu");
+    //    if (portrait) {
+            // const nav = document.querySelector("#menu");
 
-            nav.classList.toggle("menu-start-position");
-            nav.classList.toggle("menu-in");
-            nav.classList.toggle("menu-out");
+            // nav.classList.toggle("menu-start-position");
+            // nav.classList.toggle("menu-in");
+            // nav.classList.toggle("menu-out");
+            // c
 
-            document.querySelector("#open-menu-container").classList.toggle("fade-in");
-            document.querySelector("#open-menu-container").classList.toggle("fade-out");
-        }
+            // document.querySelector("#open-menu-container").classList.toggle("fade-in");
+            // document.querySelector("#open-menu-container").classList.toggle("fade-out");
+      //  }
     })
 }
 

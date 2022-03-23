@@ -1,7 +1,7 @@
 function filterData(audioBuffer) { // Réduction du nombre de data 
     const rawData = audioBuffer.getChannelData(0); // Récupération uniquemenet du canal gauche
     const samples = 80; //Ici voir combien on veut avoir de "barres" // Valeur peut etre à modifier
-    const blockSize = Math.floor(rawData.length / samples); 
+    const blockSize = Math.floor(rawData.length / samples);
     let filteredData = [];
 
     for (let i = 0; i < samples; i++) {
@@ -11,7 +11,7 @@ function filterData(audioBuffer) { // Réduction du nombre de data
             sum += Math.abs(rawData[blockStart + j]);
         filteredData.push(sum / blockSize);
     }
-    
+
     return filteredData;
 }
 
@@ -21,15 +21,12 @@ function normalize(data) {
     return data.map(n => n * multiplier);
 }
 
-export function getAudioData(file, name) {
+export function getAudioData(file, name, content) {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     const audioContext = new AudioContext();
     let audioData = null;
-    
-    return new Promise((resolve, reject) => {
-        if (sessionStorage.getItem(name))
-            resolve(JSON.parse(sessionStorage.getItem(name)));
-        fetch(file) // Tester de remplacer fetch par require
+    return new Promise((resolve) => {
+        fetch(file)
         .then(response => response.arrayBuffer())
         .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
         .then(function(audioBuffer) {
@@ -38,25 +35,5 @@ export function getAudioData(file, name) {
             sessionStorage.setItem(name, JSON.stringify(audioData));
             resolve(audioData);
         })
-        .catch(error => {
-            reject(error);
-        });
-    })
+    });
 }
-
-// export function getAllAudioData(content) {
-//     const arrContent = Object.keys(content);
-
-//     return new Promise((resolve) => {
-//         for (let i = 0; i < arrContent.length; i++) {
-//             const audio = require(`/src/assets/content/${content[arrContent[i]]}`);
-//             getAudioData(audio)
-//                 .then((response) => {
-//                     sessionStorage.setItem(arrContent[i], JSON.stringify(response));
-//                     if (i == arrContent.length - 1)
-//                         resolve();
-//                 });
-//         }
-//     })
-   
-// }

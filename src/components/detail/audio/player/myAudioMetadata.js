@@ -28,10 +28,9 @@ export function createTitle(name) {
     titleContainer.id = "title-sound-track";
     
     title.innerHTML = name;
-
+    title.id = "title-name-track";
     titleContainer.append(title);
     document.querySelector("#player-container").prepend(titleContainer);
-    console.log("title");
 }
 
 export function formatTime(time) {

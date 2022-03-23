@@ -1,5 +1,5 @@
 import { toggleMapControlers, map } from "./MyMap.js"
-import createDetail from "../detail/myDetail.js"
+import { createDetail, toggleDetail } from "../detail/myDetail.js"
 import { flyToDestination } from "./cameraMvt.js"
 import { toggleUtils } from "../utils/myUtils.js";
 import { toggleFilterButton } from "../utils/filters/myResponsiveFilters.js";
@@ -39,7 +39,7 @@ function createContent(feature, color) {
 
 function preloadImg(path) {
     const preloadLink = document.createElement("link");
-    preloadLink.href = require(`/src/assets/content/${path}/img/illu.jpg`);
+    preloadLink.href = require(`../../assets/content/${path}/img/illu.jpg`);
     preloadLink.rel = "preload";
     preloadLink.as = "image";
 
@@ -51,7 +51,7 @@ function createImg(path) {
 
     preloadImg(path);
 
-    img.src = require(`/src/assets/content/${path}/img/illu.jpg`);
+    img.src = require(`../../assets/content/${path}/img/illu.jpg`);
 
     return img;
 
@@ -65,18 +65,23 @@ export function createPopUp(feature, color, layer) {
 
     popUp.id = "pop-up";
     popUp.name = layer;
-    if (feature.properties.content) {
-        const img = createImg(feature.properties.content);
-       // popUp.style.width = "50%";
-        popUp.appendChild(img);
 
-        img.addEventListener("load", () => {
-            popUpContainer.classList.remove("fade-out");
-            popUpContainer.classList.add("fade-in");
-        });
-    }
-    else 
-        popUp.style.width = "33%";
+    const img = createImg(feature.properties.content);
+    popUp.appendChild(img);   
+
+    img.addEventListener("load", () => {
+        if (img.offsetHeight > img.offsetWidth) {
+            if (window.innerWidth > window.innerHeight)
+                img.style.maxWidth = 25 +"%";
+            else {
+                img.style.maxWidth = 50 + "%";
+                img.style.margin = 0 + " auto";
+            }    
+        }
+        popUpContainer.classList.remove("fade-out");
+        popUpContainer.classList.add("fade-in");
+    });
+
     close.className = "close fas fa-times-circle";
 
     popUp.appendChild(close);
@@ -98,17 +103,18 @@ export function createPopUp(feature, color, layer) {
     }, 250);
     let listen = document.querySelector(".cta-listen");
 
-    listen.addEventListener("click", function () {
-        if (!feature.properties.content)
+    listen.addEventListener("click", () => {
+        if (feature.properties.content !== "main_d_oeuvres")
             return;
         popUpContainer.classList.add("fade-out");
-        toggleUtils();
+        toggleUtils(false);
         flyToDestination(lgtLat);
+        createDetail(feature.properties.content, feature.properties.name, layer);
         map.once("zoomend", () => {
             popUpContainer.remove(popUp);
             map.setLayoutProperty(layer, "visibility", "none");
-            createDetail(feature.properties.content, feature.properties.name, layer);
-            //turnAround(0);
+            toggleDetail(true);
+            
     });
 
     });
@@ -125,5 +131,4 @@ export function createPopUp(feature, color, layer) {
             }, 250);
         }
     })
-    //  let ctaListen = document.querySelector("cta-listen")
 }
