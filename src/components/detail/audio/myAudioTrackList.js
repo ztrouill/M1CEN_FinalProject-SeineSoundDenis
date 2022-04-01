@@ -1,7 +1,5 @@
 import { redrawWave } from "./waveform/drawWave.js";
 
-const portrait = window.innerWidth <= window.innerHeight ? true : false;
-
 export function createMenuTrackList() {
     const menu = document.createElement("i");
     const container = document.querySelector("#title-sound-track");
@@ -10,14 +8,16 @@ export function createMenuTrackList() {
     container.prepend(menu);
 
     menu.addEventListener("click", () => {
-        const trackList = document.querySelector("#track-list-container");
+        const trackList = document.querySelector("#track-list-container-mobile");
+        const trackListStyle = window.getComputedStyle(trackList);
+        const isHidden = trackListStyle.getPropertyValue("display");
         const slider = document.querySelector("#slider-container");
 
-        if (trackList.classList.contains("hide")) {
+        if (isHidden === "none") {
             slider.classList.toggle("fade-in");
             slider.classList.toggle("fade-out");
             slider.classList.toggle("showed-element");
-            trackList.classList.toggle("hide");
+            trackList.style.display = "flex";
             menu.classList.toggle("fade-in");
             menu.classList.toggle("fade-out");
             trackList.classList.toggle("showed-element");
@@ -44,7 +44,7 @@ export function createMenuTrackList() {
             setTimeout(() => {
                 slider.classList.toggle("fade-in");
                 slider.classList.toggle("fade-out");
-                trackList.classList.toggle("hide");
+                trackList.style.display = "none";
                 menu.classList.toggle("fa-bars");
                 menu.classList.toggle("fa-times");
                 menu.classList.toggle("fade-in");
@@ -54,7 +54,7 @@ export function createMenuTrackList() {
     })
 }
 
-function createEvent(content, color) {
+function createEvent(content) {
     let trackEl = document.querySelectorAll(".name-track");
 
     for (let i = 0; i < trackEl.length; i++) {
@@ -68,26 +68,22 @@ function createEvent(content, color) {
                 const isPaused = audio.paused;
                 if (!isPaused)
                     audio.pause();
-                const audioSrc = require(`/src/assets/content/${content[key]}`);
+                const audioSrc = require(`../../../assets/content/${content[key]}`);
                 audio.src = audioSrc;
-                redrawWave(audioSrc, trackEl[i], i);
-                let title = document.querySelector("#title-sound-track");
-                title.innerHTML = trackEl[i].innerHTML;
-                setTimeout(() => {
-                    audio.play();
-               }, 100);
+                redrawWave(audioSrc, trackEl[i], audio);
             }
         })
     }
 }
 
-export function createTrackList(content, color) {
+export function createTrackList(content, color, device) {
     let arrContent = Object.keys(content);
     let container = document.createElement("div");
+    const fade = device === "desktop" ? "fade-in" : "fade-out";
 
-    container.id = "track-list-container";
-//    container.className = "fade-in";
-    
+    container.id = `track-list-container-${device}`;
+    container.className = `${fade} track-list-container`;
+
     for (let i = 0; i < arrContent.length; i++) {
         let trackContainer = document.createElement("div");
         let track = document.createElement("span");
@@ -110,9 +106,6 @@ export function createTrackList(content, color) {
     
     createEvent(content, color);
 
-    if (portrait) {
+    if (device === "mobile")
         createMenuTrackList();
-        container.classList.add("hide");
-        container.classList.add("fade-out");
-    }
 }

@@ -30,16 +30,22 @@ function toggleAfterContent(i) {
     const player = document.querySelector("#player-container");
     const time = i == 0 ? 750 : 0;
 
-    after.classList.toggle("after-content-init-pos");
-    after.classList.toggle("after-content-in");
-    after.classList.toggle("after-content-out");
+   // after.classList.toggle("show-tabit-pos");
+    after.classList.toggle("show-tab");
+    after.classList.toggle("closed-tab");
 
 
     setTimeout(() => {
         
-        middle.classList.toggle("fade-in");
-        middle.classList.toggle("fade-out");
-        
+        if (middle.id === "track-list-container-mobile") {
+            middle.classList.toggle("fade-in");
+            middle.classList.toggle("fade-out");
+        }
+        else {
+            middle.classList.toggle("fade-in");
+            middle.classList.toggle("fade-out");
+        }
+       
         player.classList.toggle("fade-in");
         player.classList.toggle("fade-out");
     }, time);
@@ -49,7 +55,7 @@ function createAfterContent(color) {
     const container = document.createElement("div");
 
     container.id = "mobile-after-content";
-    container.className = "after-content-init-pos after-content-out";
+    container.className = "closed-tab";
 
     createContent(container);
     createSocialMedia(container, color);

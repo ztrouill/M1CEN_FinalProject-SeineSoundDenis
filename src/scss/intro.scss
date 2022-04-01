@@ -1,0 +1,68 @@
+@import "../variables";
+
+#video-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+   .intro-message {
+        position: absolute;
+        z-index: 9999999;
+        width: 100vw;
+        height: 100vh;
+        color: $beige;
+        top: 0;
+        text-align: center;
+        left: 0;
+        font-size: 2vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        i {
+            font-size: 4vw;
+            color: $beige;
+            padding-top: 3vw;
+        }
+    }
+    .close-video {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 2vw;
+        color: $beige;
+        z-index: 9999;
+        cursor: pointer;
+        padding: 2vw;
+    }
+    video {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@media only screen and (orientation: portrait){
+    #video-container {
+        .intro-message {
+            font-size: 3vh;
+            i {
+                font-size: 4vh;
+                padding-top: 3vh;
+            }
+        }
+        .close-video {
+            font-size: 2vh;
+            padding: 2vh;
+        }
+    }
+}
+
+.fade-message-in {
+    opacity: 1;
+    transition: opacity .5s ease-in;
+}
+
+.fade-message-out {
+    opacity: 0;
+    transition: opacity .5s ease-in;
+}

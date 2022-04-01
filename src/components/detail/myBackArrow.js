@@ -20,7 +20,7 @@ function createEvents(layer) {
                 createAudioEvent();
                 createListenEvent();
             }
-            toggleUtils();
+            toggleUtils(false);
             contentContainer.remove();
             if (document.querySelector("#show-filters"))
                 toggleFilterButton(document.querySelector("#show-filters"));
@@ -34,7 +34,7 @@ function createElements() {
     const container = document.createElement("a");
     const backArrow = document.createElement("img");
 
-    backArrow.src = require("/src/assets/back.svg");
+    backArrow.src = require("../../assets/back.svg");
     
     container.append(backArrow);
     container.id = "back-arrow";

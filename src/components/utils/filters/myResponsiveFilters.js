@@ -15,7 +15,7 @@ function createCloseEvent(show, close, filters) {
         show.classList.remove("hide");
 
         setTimeout(() => {
-            toggleFilters(filters);
+            toggleMobileFilters(filters);
             setTimeout(() => {
                 toggleFilterButton(show);
                 filters.classList.add("hide");
@@ -28,7 +28,7 @@ function createCloseEvent(show, close, filters) {
 function createShowButton() {
     const button = document.createElement("img");
 
-    button.src = require("/src/assets/filter.svg");
+    button.src = require("../../../assets/filter.svg");
     button.className = "filter-button fade-out";
     button.id = "show-filters"
 
@@ -43,7 +43,7 @@ function createShowEvent(show, close, filters) {
         filters.classList.remove("hide");
         close.classList.remove("hide");
         setTimeout(() => {
-            toggleFilters(filters);
+            toggleMobileFilters(filters);
             setTimeout(() => {
                 toggleFilterButton(close);
             }, 750);
@@ -52,7 +52,7 @@ function createShowEvent(show, close, filters) {
     });
 }
 
-function toggleFilters(filters) {
+function toggleMobileFilters(filters) {
     filters.classList.toggle("filter-init-pos");
     filters.classList.toggle("filter-in");
     filters.classList.toggle("filter-out");
@@ -61,13 +61,12 @@ function toggleFilters(filters) {
 
 
 export function toggleFilterButton(button) {
-    console.log("hello");
     button.classList.toggle("fade-in");
     button.classList.toggle("fade-out");
 }
 
 export function createResponsiveFilters() {
-    const filterContainer = document.querySelector("#filters-background");
+    const filterContainer = document.querySelector("#filters-mobile");
 
     filterContainer.classList.add("hide");
     const closeButton = createCloseButton();
@@ -76,6 +75,4 @@ export function createResponsiveFilters() {
     createShowEvent(showButton, closeButton, filterContainer);
     createCloseEvent(showButton, closeButton, filterContainer);
     document.querySelector("#utils").append(showButton);
-
-    
 }

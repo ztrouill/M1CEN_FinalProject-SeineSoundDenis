@@ -1,7 +1,7 @@
 export function switchIconButton(i, button) {
     const icons = ["play", "pause"];
    
-    button.src = require(`/src/assets/${icons[i]}.svg`);
+    button.src = require(`../../../../assets/${icons[i]}.svg`);
 }
 
 export function createListenEvent() {

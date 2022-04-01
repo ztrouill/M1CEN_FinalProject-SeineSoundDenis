@@ -1,11 +1,11 @@
-#filters-background {
+.filters-background {
     width: 100%;
     display: flex;
     background: linear-gradient(0deg, black 0%, rgba(0, 0, 0, 0) 100%);
     position: absolute;
     bottom: 0;
     z-index: 9999;
-    #filters-container {
+    .filters-container {
         display: flex;
         width: 90%;
         align-items: center;
@@ -87,19 +87,27 @@
     z-index: 9999999;
 }
 
-
 @media only screen and (min-width : 1000px) {
     .filter-button {
+        display: none;
+    }
+    #filters-mobile {
         display: none;
     }
 }
 
 @media only screen and (max-width : 1000px) {
-    #filters-background {
+    #filters-desktop {
+        display: none;
+    }
+    #filters-mobile {
+        display: flex;
+    }
+    .filters-background {
         height: 100%;
         align-items: center;
         background: linear-gradient(0deg, black 0, rgba(0, 0, 0, 0.6) 100%);
-        #filters-container {
+        .filters-container {
             width: 50%;
             justify-content: space-around;
             flex-direction: column;
@@ -134,10 +142,10 @@
 }
 
 @media only screen and (max-width : 612px) and (orientation: portrait){
-    #filters-background {
+    .filters-background {
         height: 100%;
         align-items: center;
-        #filters-container {
+        .filters-container {
             width: 75%;
             height: 56%;
             .filter-component {
@@ -169,10 +177,10 @@
 }
 
 @media only screen and (max-width : 415px) and (orientation: portrait){
-    #filters-background {
+    .filters-background {
         height: 100%;
         align-items: center;
-        #filters-container {
+        .filters-container {
             width: 80%;
             height: 56%;
             .filter-component {

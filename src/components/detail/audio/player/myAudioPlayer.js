@@ -2,8 +2,6 @@ import { createWaveform } from "../waveform/myWaveform";
 import { createAudio, createAudioEvent } from "../myAudio.js"
 import { createButton, createListenEvent } from "./myPlayPauseButton.js";
 import { createMetaData } from "./myAudioMetadata.js";
-import { createMenuTrackList } from "../myAudioTrackList";
-
 
 function  createContainers() {
     let   playerContainer = document.createElement("div");
@@ -22,13 +20,13 @@ function  createContainers() {
 
 export function createAudioPlayer(content, color) {
 
-    const audio = require(`/src/assets/content/${content[Object.keys(content)[0]]}`);
+    const audio = require(`../../../../assets/content/${content[Object.keys(content)[0]]}`);
 
     createContainers();
     createAudio(content, audio, Object.keys(content)[0]);
     createMetaData(Object.keys(content)[0])
     createButton();
-    createWaveform(audio, Object.keys(content)[0]);
+    createWaveform(audio, Object.keys(content)[0], content);
 
     createAudioEvent(color);
     createListenEvent();

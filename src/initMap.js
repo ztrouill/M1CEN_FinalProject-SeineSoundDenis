@@ -74,15 +74,9 @@ export function createMap() {
 export function createMarkers(map) {
     
     const features = map.queryRenderedFeatures( {layers: ['poi-lieux-de-cultes']});
-    console.log("len ="+ features.length)       
     for (let i = 0; i < features.length; i++) {
-       //  let el = document.createElement("img ");
-       // Ici changer la feature si on veut essayer de mettre des poi stylés
-       console.log("loop") //  el.className = "marker";
-       //  el.style.width = 40 + "px";
-       //  el.style.height = 40 + "px";
+       
        const content = createPopUp(map, features[i]) 
-       console.log("after content")
        let el = document.createElement("img");
         el.src = require("./assets/poi.svg");
         el.style.width = 40 + "px";
@@ -97,12 +91,6 @@ export function createMarkers(map) {
         
         marker.getElement().addEventListener("click", function() {
             marker.setPopup(popup);
-
-            //document.getElementsByClassName('button')[0].addEventListener("load", function() {
-              //  document.querySelector('.button').addEventListener('click', function() {
-               // console.log("hello");
-               // })
-            //})
         });
    }
 }

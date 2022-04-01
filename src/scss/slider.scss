@@ -25,6 +25,12 @@
     }
 }
 
+@media only screen and (orientation: landscape) {
+    #slider-container {
+        opacity: 1 !important;
+    }
+}
+
 @media only screen and (orientation: portrait) {
     #slider-img-container {
         height: 100%;

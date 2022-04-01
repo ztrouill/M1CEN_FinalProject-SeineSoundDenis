@@ -49,11 +49,11 @@ function preloadAudio(files) {
         const preloadLink = document.createElement("link");
         const audio = new Audio();
 
-        preloadLink.href = require(`/src/assets/content/${files[sound]}`);
+        preloadLink.href = require(`../../../assets/content/${files[sound]}`);
         preloadLink.rel = "preload";
         preloadLink.as = "audio";
 
-        audio.src = require(`/src/assets/content/${files[sound]}`);
+        audio.src = require(`../../../assets/content/${files[sound]}`);
         document.head.appendChild(preloadLink);
     }
 }

@@ -7,6 +7,7 @@ export function createUtils() {
     const container = document.createElement("div");
 
     container.id = "utils";
+ //   container.className = "fade-out";
     document.querySelector("#app").prepend(container);
 
     createFilters();
@@ -14,16 +15,18 @@ export function createUtils() {
     createMenu();
 }
 
-export function toggleUtils() {
+export function toggleUtils(start) {
     const utils = document.querySelector("#utils");
     const player = document.querySelector("#tiny-player");
 
     if (utils.getAttribute("style")) {
         utils.removeAttribute("style");
-        toggleFilter();
-        toggleLogo();
-        if (player)
-            toggleTinyPlayer();
+        setTimeout(() => {
+            toggleFilter();
+            toggleLogo();
+            if (player)
+                toggleTinyPlayer();
+        }, 100);
     }
 
     else {
@@ -33,12 +36,14 @@ export function toggleUtils() {
             document.querySelector("audio").pause();
             toggleTinyPlayer();
         }
-        setTimeout(() => {
-           utils.style.display = "none";
-            if (player) {
-                player.remove();
-                document.querySelector("audio").remove();
-            }
-        }, 1000)
+        if (!start) {
+            setTimeout(() => {
+                utils.style.display = "none";
+                 if (player) {
+                     player.remove();
+                     document.querySelector("audio").remove();
+                 }
+             }, 1000)
+        }
     }
 }

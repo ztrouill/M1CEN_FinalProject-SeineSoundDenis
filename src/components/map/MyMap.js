@@ -32,10 +32,13 @@ const maxBounds = new mapboxgl.LngLatBounds(
 
 const options = {
     container: "map",
-    style : 'mapbox://styles/zoyeah/cklavutgp0ui917qrpn3hp51g/draft',
+    style : 'mapbox://styles/zoyeah/cklavutgp0ui917qrpn3hp51g',
     center: center,
-    minZoom: 4,
+    minZoom: 7,
     maxZoom: 22,
+    pitchWithRotate: false,
+    dragRotate: false,
+    accesssToken: accesssToken
 }
 
 export const map = new mapboxgl.Map(options);
@@ -47,41 +50,60 @@ export function toggleMapControlers() {
     container.classList.toggle("fade-out");
 }
 
-export function createMap() {
+export function initMap() {
+    document.querySelector("#map").classList.add("fade-out");
+
+    map.on("load", function () {
+        for (const key in themes)
+            map.setLayoutProperty(key, "visibility", "none");
+        map.setLayoutProperty("Other_Big_Cities", "visibility", "none");
+        map.setLayoutProperty("villes-limitrophes", "visibility", "none");
+        map.setLayoutProperty("ssd-roads", "visibility", "none");
+        map.setLayoutProperty("ssd-natural", "visibility", "none");
+    });
+    map.once("load", () => {
+        console.log("map loaded")
+    })
+}
+
+export function startMapAnim() {
     return new Promise((resolve) => {
-        map.on("load", function () {
-            for (const key in themes)
-                map.setLayoutProperty(key, "visibility", "none");
-            map.setLayoutProperty("Other_Big_Cities", "visibility", "none");
-            map.setLayoutProperty("villes-limitrophes", "visibility", "none");
-            map.setLayoutProperty("ssd-roads", "visibility", "none");
-            map.setLayoutProperty("ssd-natural", "visibility", "none");
-           // map.addControl(new mapboxgl.NavigationControl());
-            document.querySelector(".mapboxgl-control-container").classList.add("fade-in");
-            // All tiles is loaded ?
-          
-            setTimeout(() => {
-                map.fitBounds(goToBounds);
-            }, 750);
-            map.once("zoomend", () => {
-                map.setLayoutProperty("Other_Big_Cities", "visibility", "visible");
-                map.setLayoutProperty("villes-limitrophes", "visibility", "visible");
-                map.setLayoutProperty("ssd-roads", "visibility", "visible");
-                map.setLayoutProperty("ssd-natural", "visibility", "visible");
-
-
-                map.setMaxBounds(map.getBounds());
-                map.setMinZoom(map.getZoom());
-                for (const key in themes) {
-                    map.on("click", key, (e) => {
-                        if (document.querySelector("#show-filters"))
-                            toggleFilterButton(document.querySelector("#show-filters"));
-                        toggleMapControlers();
-                        createPopUp(e.features[0], themes[key].color, key);
-                    })
+        
+        map.fitBounds(goToBounds);
+        
+        map.once("zoomend", () => {
+            let isLoaded = false;
+            map.on("render", function() {
+                if(map.loaded() && !isLoaded) {
+                setTimeout(() => {
+                        document.querySelector("#map").classList.toggle("fade-in");
+                        document.querySelector("#map").classList.toggle("fade-out");
+            
+                        map.setLayoutProperty("Other_Big_Cities", "visibility", "visible");
+                        map.setLayoutProperty("villes-limitrophes", "visibility", "visible");
+                        map.setLayoutProperty("ssd-roads", "visibility", "visible");
+                        map.setLayoutProperty("ssd-natural", "visibility", "visible");
+                        map.setMaxBounds(map.getBounds());
+                        map.setMinZoom(map.getZoom());
+                        
+                        for (const key in themes) {
+                            map.on("click", key, (e) => {
+                                if (document.querySelector("#show-filters"))
+                                    toggleFilterButton(document.querySelector("#show-filters"));
+                                toggleMapControlers();
+                                createPopUp(e.features[0], themes[key].color, key);
+                            })
+                        }
+                        resolve();
+                }, 1000);
+                isLoaded = true;
+                map.off("render", () => {
+                    return;
+                })
                 }
-                resolve();
-            })
+            });
+            
         });
-    })  
+    })
+   
 }

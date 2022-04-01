@@ -16,7 +16,6 @@ export function flyToDestination(coordinates, zoom, pitch) {
         zoom: 20,
         pitch: 80
     }
-    console.log(coordinates);
     map.flyTo(options);
 }
 

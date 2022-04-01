@@ -1,15 +1,30 @@
 import "./index.scss"
-import { createMap } from './components/map/MyMap.js'
+import { startMapAnim, initMap } from './components/map/MyMap.js'
 import { importFiles } from "./importFiles.js"
-import { createUtils } from "./components/utils/myUtils"
+import { startIntro } from "./components/intro/intro";
+
+const loader = require("./components/utils/myLoader.js");
+const utils = require("./components/utils/myUtils.js");
 const filters = require("./components/utils/filters/myFilters.js");
 
 export const files = importFiles();
-const tabletMobile = window.innerWidth <= 1000 ? true : false;
 
-createUtils();
-
-createMap()
+loader.createLoader();
+initMap();
+window.addEventListener("load", () => {
+    startIntro()
     .then(() => {
-        filters.showFiltersOnStart();
+            loader.toggleLoader(true);
+            document.querySelector('#video-container').remove();
+            utils.createUtils();
+            startMapAnim()
+                .then(() => {
+                    loader.toggleLoader(false);
+                    utils.toggleUtils(true);
+
+                    setTimeout(() => {
+                        filters.startAnimation();
+                    }, 1000)
+                });
     })
+});

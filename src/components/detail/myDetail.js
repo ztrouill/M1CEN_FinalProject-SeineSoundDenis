@@ -1,7 +1,7 @@
 import { createAudioPlayer } from "./audio/player/myAudioPlayer.js"
 import createSlider from "./slider/mySlider.js"
 import { createTrackList } from "./audio/myAudioTrackList.js"
-import { files } from "/src/index.js"
+import { files } from "../../index.js"
 import { themes } from '../themes.js'
 import createFutureTabs from "./futurTab/myFuturTab.js"
 import createBackArrow from "./myBackArrow.js"
@@ -16,7 +16,7 @@ function addPoiToTitle(layer) {
     const poi = document.createElement("img");
 
     poiContainer.id = "poi-title";
-    poi.src = require(`/src/assets/pois/${layer}.svg`);
+    poi.src = require(`../../assets/pois/${layer}.svg`);
     container.id = "title-place-container-mobile";
 
     poiContainer.append(poi);
@@ -55,6 +55,7 @@ function createContainer() {
     leftContainer.className = "both-container";
 
     contentContainer.id = "content-container";
+    contentContainer.className = "fade-out";
 
     document.querySelector("#app").appendChild(contentContainer);
     document.querySelector("#content-container").appendChild(leftContainer);
@@ -72,7 +73,7 @@ function createYear(layer) {
     imgContainer.id = "poi-year";
     year.id = "year-text";
 
-    img.src = require(`/src/assets/pois/${layer}.svg`);
+    img.src = require(`../../assets/pois/${layer}.svg`);
     year.innerHTML = "2021";
 
     imgContainer.appendChild(img);
@@ -81,7 +82,21 @@ function createYear(layer) {
     document.querySelector("#left-container").appendChild(container);
 }
 
-export default function createDetail(path, name, layer) {
+export function toggleDetail(bool) {
+    const container = document.querySelector("#content-container");
+
+    if (bool) {
+        container.classList.add("fade-in");
+        container.classList.remove("fade-out");
+    }
+    else {
+        container.classList.remove("fade-in");
+        container.classList.add("fade-out");
+    }
+        
+}
+
+export function createDetail(path, name, layer) {
     const place = files[path];
     const color = themes[layer].color;
     const theme = themes[layer].name;
@@ -90,13 +105,12 @@ export default function createDetail(path, name, layer) {
     createAudioPlayer(place["son"], color);
     createTitle(name, color, theme);
     createYear(layer);
-    createTrackList(place["son"], color);
+    createTrackList(place["son"], color, "desktop");
+    createTrackList(place["son"], color, "mobile");
     createSlider(place["img"], path);
     createBackArrow(layer);
     createFutureTabs(color);
 
-    if (portrait) {
-        createMobileFutureTabs(color);
-        addPoiToTitle(layer);
-    }
+    createMobileFutureTabs(color);
+    addPoiToTitle(layer);
 }
