@@ -20,6 +20,14 @@ Watch here : https://vimeo.com/599527443
 
 ![illu04](/src/assets/ScreenShots/4.png)
 
+As this project is a prototype, we don't have all soundscapes locations. We recorded sounds in one place : Main d'Oeuvres.
+
+How to find this place ? Follow the steps! :) 
+
+![Step-1](/src/assets/ScreenShots/find-1.png)
+![Step-2](/src/assets/ScreenShots/find-2.png)
+![Step-3](/src/assets/ScreenShots/find-3.png)
+
 ## Project setup
 ```
 npm install
