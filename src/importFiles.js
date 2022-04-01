@@ -8,16 +8,6 @@ function importAll(r) {
     return files;
 }
 
-function importTitles(r) {
-    let titles = {};
-
-    r.keys().map((item) => {
-        titles[item.replace("./", "")] = r(item);
-    });
-    
-    return titles;
-}
-
 function parseImg(res, files) {
     for (const key in res) {
         if (!res[key]["img"])
@@ -33,11 +23,8 @@ function parseImg(res, files) {
         }
     }
 }
-// https://dev.to/pldg/lazy-load-images-with-webpack-5e80
-function parseSound(res, files) {
-    const soundTitle = importTitles(require.context("./assets/content/", true, /\.json$/));
 
-    console.log(soundTitle);
+function parseSound(res, files) {
     for (const key in res) {
         if (!res[key]["son"])
             res[key]["son"] = {};
@@ -45,11 +32,9 @@ function parseSound(res, files) {
             const type = file.split("/")[1];
             const dir = file.split("/")[0];
             if (type === "son" && key === dir) {
-                let fileName = soundTitle[`${key}/content.json`];
-                let index = file.split("/")[2];
-                index.split(".")[0];
-                index = parseInt(index);
-                fileName = fileName[index];
+                let fileName = file.split("/")[2];
+                fileName = fileName.split(".")[0];
+                res[key]["son"][fileName] = files[file];
                 res[key]["son"][fileName] = files[file];
             }
         }
@@ -68,13 +53,11 @@ function parseFiles(files) {
     parseImg(res, files);
     parseSound(res, files);
 
-    console.log(res);
-
     return res;
 }
 
 export function importFiles() {
-    const files = importAll(require.context("./assets/content/", true, /\.(png|jpe?g|svg|mp3|wav)$/));//(importAll(require.context(`/src/assets/places/${path}/img/`, false, /\.(png|jpe?g|svg)$/));
+    const files = importAll(require.context("./assets/content/", true, /\.(png|jpe?g|svg|mp3|wav)$/));
     const parsedFiles = parseFiles(files);
 
     return parsedFiles;

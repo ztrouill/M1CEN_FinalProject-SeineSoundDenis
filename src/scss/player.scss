@@ -10,6 +10,9 @@
   #title-sound-track {
     justify-self: center;
     font-size: 1.5vw;
+    .menu-tracklist {
+      display: none;
+    }
   }
   #waveform-container {
     height: 100%;
@@ -49,8 +52,10 @@
   }
 }
 
-.menu-tracklist {
-  display: none;
+@media only screen and (orientation: landscape) {
+  #player-container {
+      opacity: 1 !important;
+  }
 }
 
 @media only screen and (max-width : 1108px) {
@@ -78,6 +83,7 @@
       width: 100%;
       .menu-tracklist {
         font-size: 3.2vh;
+        display: inline-block;
       }
     }
     #info-audio-container {

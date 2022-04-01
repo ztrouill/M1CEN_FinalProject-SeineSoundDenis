@@ -28,6 +28,9 @@
     .content {
         max-width: 100%;
         padding: 6vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         .title {
             font-size: 1.5vw;
         }
@@ -39,7 +42,7 @@
         .cta-container {
             display: flex;
             .cta-listen {
-                padding: .25vw 1.5vw;//.25em 1.5em;
+                padding: .25vw 1.5vw;
                 font-weight: bold;
                 border-radius: .25em;
                 margin: 0 auto;
@@ -57,18 +60,6 @@
         padding: 2vw;
     }
 }
-
-// @media only screen and (min-width: 2000px)  {
-//     #pop-up {
-//         width: 40%;
-//     }
-// }
-
-// @media only screen and (max-width: 1400px)  {
-//     #pop-up {
-//         width: 40%;
-//     }
-// }
 
 @media only screen and (max-width: 1100px) and (orientation: landscape)  {
     #pop-up  {
@@ -90,39 +81,7 @@
     }
 }
 
-@media only screen and (orientation: portrait) and (max-width: 800px) { // Ici à voir la max width
-    #pop-up-container {
-        flex-direction: column-reverse;
-        background: rgba(34, 36, 44, .5);
-        #pop-up  {
-            width: 80%;
-            flex-direction: column;
-            img {
-                max-width: 100%;
-                border-radius: 16px 16px 0 0;
-                box-sizing: border-box;
-            }
-            .content {
-                .title {
-                    font-size: 3.2vh;
-                }
-                p {
-                    font-size: 2vh;
-                }
-                .cta-listen {
-                    font-size: 2vh;
-                    padding: 1vh 2vh;
-                }
-            }
-            .close {
-                font-size: 4vh;
-                padding: 2vh;
-            }
-        }
-    }
-}
-
-@media only screen and (orientation: portrait) and (max-width: 800px) and (max-height: 1000px){ // Ici à voir la max width
+@media only screen and (orientation: portrait) and (max-width: 800px) {
     #pop-up-container {
         flex-direction: column-reverse;
         background: rgba(34, 36, 44, .5);
@@ -137,18 +96,18 @@
             .content {
                 padding: 4vh;
                 .title {
-                    font-size: 2.6vh;
+                    font-size: 3vh;
                 }
                 p {
-                    font-size: 1.6vh;
+                    font-size: 1.8vh;
                 }
                 .cta-listen {
-                    font-size: 1.6vh;
+                    font-size: 1.8vh;
                     padding: 1vh 2vh;
                 }
             }
             .close {
-                font-size: 3vh;
+                font-size: 4vh;
                 padding: 2vh;
             }
         }
